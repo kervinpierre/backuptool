@@ -1,0 +1,152 @@
+<?xml version="1.0"?>
+<!--
+ SLU Dev Inc. CONFIDENTIAL
+ DO NOT COPY
+
+Copyright (c) [2012] - [2015] SLU Dev Inc. <info@sludev.com>
+All Rights Reserved.
+
+NOTICE:  All information contained herein is, and remains
+ the property of SLU Dev Inc. and its suppliers,
+ if any.  The intellectual and technical concepts contained
+ herein are proprietary to SLU Dev Inc. and its suppliers and
+ may be covered by U.S. and Foreign Patents, patents in process,
+ and are protected by trade secret or copyright law.
+ Dissemination of this information or reproduction of this material
+ is strictly forbidden unless prior written permission is obtained
+ from SLU Dev Inc.
+-->
+
+<!-- Main 'backupset' configuration file.  This file specifies the config -->
+<!-- for a single backupset.  The Agent will still need the agent config  -->
+<!-- for its main parameters. -->
+<xs:schema version="1.0"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified">
+
+    <xs:element name="backupConfig">
+        <xs:complexType>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element name="setName" type="xs:string" minOccurs="1" maxOccurs="1" />
+                <xs:element name="encrypt" type="EncryptType" minOccurs="1" maxOccurs="1" />
+                <xs:element name="setType" type="SetTypeType" minOccurs="0" />
+                <xs:element name="itemList" type="ItemListType" minOccurs="1" maxOccurs="1" />
+                <xs:element name="stateFile" type="xs:string" minOccurs="0" />
+                <xs:element name="holdingDirectoryPath" type="xs:string" minOccurs="1" maxOccurs="1"  />
+                <xs:element name="compressionScheme" type="CompressionType" minOccurs="0"/>
+                <xs:element name="chunk" type="ChunkType" minOccurs="0"  />
+                <xs:element name="logFile" type="xs:string" minOccurs="0" />
+                <xs:element name="logEmail" type="xs:string" minOccurs="0" />
+                <xs:element name="emailOnCompletion" type="xs:boolean" minOccurs="0" />
+                <xs:element name="priority" type="PriorityType" minOccurs="0" />
+                <xs:element name="lockFilePath" type="xs:string" minOccurs="0" />
+
+                <xs:element name="archiveNameRegex" type="xs:string" minOccurs="0"  maxOccurs="1"  />
+                <xs:element name="archiveNameComponent" type="xs:string" minOccurs="0" />
+                <xs:element name="archiveNameTemplate" type="xs:string" minOccurs="0"  maxOccurs="1"   />
+
+                <xs:element name="jobNameRegex" type="xs:string" minOccurs="0"  maxOccurs="1"  />
+                <xs:element name="jobNameComponent" type="xs:string" minOccurs="0" />
+                <xs:element name="jobNameTemplate" type="xs:string" minOccurs="0"  maxOccurs="1"  />
+
+                <xs:element name="storageType" type="StorageTypeType" minOccurs="0" />
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:simpleType name="PriorityType">
+        <xs:restriction base="xs:integer">
+            <xs:minInclusive value="0" />
+            <xs:maxInclusive value="10" />
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="SetTypeType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="full"/>
+            <xs:enumeration value="incremental"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="EncryptType">
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element name="cipher" maxOccurs="1">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:enumeration value="AES"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="key" type="xs:string" maxOccurs="1" />
+            </xs:choice>
+    </xs:complexType>
+
+    <xs:complexType name="ItemListType">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="directory" type="DirectoryType" maxOccurs="unbounded" />
+            <xs:element name="file" type="FileType" maxOccurs="unbounded" />
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:complexType name="PathType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="type" type="xs:string" />
+                <xs:attribute name="exclude" type="xs:boolean" />
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    
+    <xs:complexType name="DirectoryType">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="path" type="PathType" minOccurs="1" maxOccurs="1" />
+            <xs:element name="directory" type="DirectoryType" maxOccurs="unbounded" />
+            <xs:element name="file" type="FileType" maxOccurs="unbounded" />
+        </xs:choice>
+        <xs:attribute name="backupType" type="xs:string" />
+        <xs:attribute name="backupOptions" type="xs:string" />
+        <xs:attribute name="groupName" type="xs:string" />
+    </xs:complexType>
+    
+    <xs:complexType name="FileType">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="path" type="PathType" minOccurs="1" maxOccurs="1" />
+        </xs:choice>
+    </xs:complexType>
+    
+    <xs:simpleType name="CompressionType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="none"/>
+            <xs:enumeration value="gzip"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:complexType name="ChunkType">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="size" type="xs:integer" />
+            <xs:element name="sizeType" type="xs:string" />
+        </xs:choice>
+        <xs:attribute name="enable" type="xs:boolean" />
+    </xs:complexType>
+    
+    <xs:complexType name="StorageTypeType">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="backend"  minOccurs="1" maxOccurs="1">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="s3"/>
+                        <xs:enumeration value="fs"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="size" type="xs:integer"  minOccurs="0" maxOccurs="1"/>
+            <xs:element name="sizeType" type="xs:string" />
+            <xs:element name="user" type="xs:string" />
+            <xs:element name="pass" type="xs:string" />
+            <xs:element name="url" type="xs:string"  />
+            <xs:element name="path" type="xs:string"  />
+        </xs:choice>
+        <xs:attribute name="enable" type="xs:boolean" />
+    </xs:complexType>
+    
+</xs:schema>

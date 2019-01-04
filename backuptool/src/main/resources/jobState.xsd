@@ -1,0 +1,130 @@
+<?xml version="1.0"?>
+<!--
+ SLU Dev Inc. CONFIDENTIAL
+ DO NOT COPY
+
+Copyright (c) [2012] - [2015] SLU Dev Inc. <info@sludev.com>
+All Rights Reserved.
+
+NOTICE:  All information contained herein is, and remains
+ the property of SLU Dev Inc. and its suppliers,
+ if any.  The intellectual and technical concepts contained
+ herein are proprietary to SLU Dev Inc. and its suppliers and
+ may be covered by U.S. and Foreign Patents, patents in process,
+ and are protected by trade secret or copyright law.
+ Dissemination of this information or reproduction of this material
+ is strictly forbidden unless prior written permission is obtained
+ from SLU Dev Inc.
+-->
+
+<!-- Job Set and Job status file.  This file describes on disk a  running or completed job -->
+<!--
+ * 2. "Job Run State File" in Job folder keeps track of that current job
+ *     Misc. Job Run Configuration that may be pertinent for Restore Job
+-->
+<xs:schema version="1.0"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           elementFormDefault="qualified">
+
+    <xs:simpleType name="TypeType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="full"/>
+            <xs:enumeration value="incremental"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="DiffType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="lastModifiedTime"/>
+            <xs:enumeration value="hash"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="HashType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="none"/>
+            <xs:enumeration value="md5"/>
+            <xs:enumeration value="sha1"/>
+            <xs:enumeration value="sha2"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="StatusType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="none"/>
+            <xs:enumeration value="started"/>
+            <xs:enumeration value="completed"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="DispositionType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="none"/>
+            <xs:enumeration value="debug"/>
+            <xs:enumeration value="info"/>
+            <xs:enumeration value="warn"/>
+            <xs:enumeration value="error"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="ArchiveSummaryType">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+
+            <xs:element name="encryptionType" maxOccurs="1">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="NONE"/>
+                        <xs:enumeration value="AES"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+
+            <xs:element name="compressionType" maxOccurs="1">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="NONE"/>
+                        <xs:enumeration value="GZIP"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+
+            <xs:element name="archiveId" type="xs:string" minOccurs="1" maxOccurs="1" />
+            <xs:element name="path" type="xs:string" minOccurs="1" maxOccurs="1" />
+            <xs:element name="listingFile" type="xs:string" minOccurs="1" maxOccurs="1" />
+            <xs:element name="orderId" type="xs:integer" minOccurs="1" maxOccurs="1" />
+
+            <xs:element name="createStart" type="xs:dateTime" minOccurs="1" maxOccurs="1" />
+            <xs:element name="createEnd" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:complexType name="ArchiveListType">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="archiveSummary" type="ArchiveSummaryType" maxOccurs="unbounded" />
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:complexType name="JobStateType">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="jobId" type="xs:string" minOccurs="1" maxOccurs="1" />
+            <xs:element name="jobSetId" type="xs:string" minOccurs="1" maxOccurs="1" />
+            <xs:element name="path" type="xs:string" minOccurs="1" maxOccurs="1" />
+            <xs:element name="start" type="xs:dateTime" minOccurs="1" maxOccurs="1" />
+            <xs:element name="end" type="xs:dateTime" minOccurs="0" maxOccurs="1" />
+            <xs:element name="type" type="TypeType" minOccurs="1" maxOccurs="1" />
+            <xs:element name="systemId" type="xs:string" minOccurs="0" maxOccurs="1" />
+            <xs:element name="status" type="StatusType" minOccurs="1" maxOccurs="1" />
+            <xs:element name="disposition" type="DispositionType" minOccurs="1" maxOccurs="1" />
+
+            <xs:element name="jobSet" type="xs:string" minOccurs="1" maxOccurs="1" />
+            <xs:element name="jobErrorsFile" type="xs:string" minOccurs="1" maxOccurs="1" />
+            <xs:element name="previousJobId" type="xs:string" minOccurs="1" maxOccurs="1" />
+            <xs:element name="archives" type="ArchiveListType" minOccurs="0" maxOccurs="1" />
+            <xs:element name="diff" type="DiffType" minOccurs="0" maxOccurs="1" />
+            <xs:element name="hash" type="HashType" minOccurs="0" maxOccurs="1" />
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:element name="jobState" type="JobStateType" />
+
+</xs:schema>

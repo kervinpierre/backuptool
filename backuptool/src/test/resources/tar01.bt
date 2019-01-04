@@ -1,0 +1,29 @@
+
+/*
+ * General header structs and algorithms...
+ * https://github.com/libarchive/libarchive/blob/master/libarchive/archive_read_support_format_tar.c
+ *
+ * Information about PAX extended header...
+ * https://www.mkssoftware.com/docs/man4/pax.4.asp
+ *
+ */
+typedef struct archive_entry_header_ustar {
+	char	name[100];
+	char	mode[8];
+	char	uid[8];
+	char	gid[8];
+	char	size[12];
+	char	mtime[12];
+	char	checksum[8];
+	char	typeflag[1];
+	char	linkname[100];	/* "old format" header ends here */
+	char	magic[6];	/* For POSIX: "ustar\0" */
+	char	version[2];	/* For POSIX: "00" */
+	char	uname[32];
+	char	gname[32];
+	char	rdevmajor[8];
+	char	rdevminor[8];
+	char	prefix[155];
+} POSIX_HEADER;
+
+POSIX_HEADER header;
