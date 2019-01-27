@@ -1,19 +1,19 @@
 /*
- *  SLU Dev Inc. CONFIDENTIAL
+ *  CityMSP LLC CONFIDENTIAL
  *  DO NOT COPY
  *
- *  Copyright (c) [2012] - [2015] SLU Dev Inc. <info@sludev.com>
- *  All Rights Reserved.
+ * Copyright (c) [2012] - [2019] CityMSP LLC <info@citymsp.nyc>
+ * All Rights Reserved.
  *
- *  NOTICE:  All information contained herein is, and remains
- *  the property of SLU Dev Inc. and its suppliers,
+ * NOTICE:  All information contained herein is, and remains
+ *  the property of CityMSP LLC and its suppliers,
  *  if any.  The intellectual and technical concepts contained
- *  herein are proprietary to SLU Dev Inc. and its suppliers and
+ *  herein are proprietary to CityMSP LLC and its suppliers and
  *  may be covered by U.S. and Foreign Patents, patents in process,
  *  and are protected by trade secret or copyright law.
  *  Dissemination of this information or reproduction of this material
  *  is strictly forbidden unless prior written permission is obtained
- *  from SLU Dev Inc.
+ *  from CityMSP LLC
  */
 package com.fastsitesoft.backuptool.utils;
 
@@ -21,6 +21,7 @@ import com.fastsitesoft.backuptool.config.entities.BackupConfigEncryption;
 import com.fastsitesoft.backuptool.enums.BackupToolCompressionType;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
 import org.apache.commons.compress.archivers.tar.TarArchiveOutputStream;
+import org.apache.commons.lang3.SystemUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -29,10 +30,15 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.nio.file.Path;
+import java.nio.file.attribute.AclEntry;
+import java.nio.file.attribute.AclFileAttributeView;
+import java.nio.file.attribute.BasicFileAttributeView;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
 import java.nio.file.attribute.PosixFileAttributeView;
 import java.nio.file.attribute.PosixFileAttributes;
 import java.nio.file.attribute.PosixFilePermission;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.zip.GZIPOutputStream;
@@ -146,6 +152,67 @@ public class BackupFileArchiveOutputStream extends OutputStream
 
     public void putArchiveEntry(final Path p, final Byte linkFlag, final Long size, LinkOption opts) throws BackupToolException
     {
+        if(SystemUtils.IS_OS_WINDOWS)
+        {
+            putArchiveEntryWin(p, linkFlag, size, opts);
+        }
+        else
+        {
+            putArchiveEntryUnix(p, linkFlag, size, opts);
+        }
+    }
+
+    public void putArchiveEntryWin(final Path p, final Byte linkFlag, final Long size, LinkOption opts) throws BackupToolException
+    {
+        String ownerName = null;
+        String groupName = null;
+        String linkName = "";
+        FileTime modTime = null;
+        long mtime = 0;
+        long currSize = 0;
+        int uid = 0;
+        int gid = 0;
+        int devMajor = 0;
+        int devMinor = 0;
+        int mode = 0;
+
+        try
+        {
+            if( size == null )
+            {
+                currSize = Files.size(p);
+            }
+            else
+            {
+                currSize = size;
+            }
+
+            final BasicFileAttributeView bAttr = Files.getFileAttributeView(p, BasicFileAttributeView.class);
+            final AclFileAttributeView aAttr = Files.getFileAttributeView(p, AclFileAttributeView.class);
+
+            final List<AclEntry> acls = aAttr.getAcl();
+
+            ownerName = aAttr.getOwner().getName();
+            groupName = "";
+            modTime   = bAttr.readAttributes().lastModifiedTime();
+            mode = 0;
+
+            mtime = modTime.to(TimeUnit.MILLISECONDS);
+            uid = 0;
+            gid = 0;
+        }
+        catch (IOException ex)
+        {
+            throw new BackupToolException(
+                    String.format("Failed retrieving attributes '%s'", p),ex);
+        }
+
+        putArchiveEntry(p, linkFlag, currSize, mtime, ownerName, groupName, linkName, uid, gid, mode,
+                devMajor, devMinor, opts);
+    }
+
+    public void putArchiveEntryUnix(final Path p, final Byte linkFlag, final Long size, LinkOption opts) throws BackupToolException
+    {
         PosixFileAttributes attributes = null;
         String ownerName = null;
         String groupName = null;
@@ -238,6 +305,11 @@ public class BackupFileArchiveOutputStream extends OutputStream
         {
             throw new BackupToolException(
                     String.format("Error adding archive '%s'", p), ex);
+        }
+        catch(NullPointerException ex)
+        {
+            throw new BackupToolException(
+                    String.format("Invalid data error adding archive '%s'", p), ex);
         }
     }
 

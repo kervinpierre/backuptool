@@ -27,3 +27,84 @@ typedef struct archive_entry_header_ustar {
 } POSIX_HEADER;
 
 POSIX_HEADER header;
+
+/*
+https://commons.apache.org/proper/commons-compress/apidocs/org/apache/commons/compress/archivers/tar/TarArchiveEntry.html
+
+struct header {
+ char name[100];     // TarConstants.NAMELEN    - offset   0
+ char mode[8];       // TarConstants.MODELEN    - offset 100
+ char uid[8];        // TarConstants.UIDLEN     - offset 108
+ char gid[8];        // TarConstants.GIDLEN     - offset 116
+ char size[12];      // TarConstants.SIZELEN    - offset 124
+ char mtime[12];     // TarConstants.MODTIMELEN - offset 136
+ char chksum[8];     // TarConstants.CHKSUMLEN  - offset 148
+ char linkflag[1];   //                         - offset 156
+ char linkname[100]; // TarConstants.NAMELEN    - offset 157
+ The following fields are only present in new-style POSIX tar archives:
+ char magic[6];      // TarConstants.MAGICLEN   - offset 257
+ char version[2];    // TarConstants.VERSIONLEN - offset 263
+ char uname[32];     // TarConstants.UNAMELEN   - offset 265
+ char gname[32];     // TarConstants.GNAMELEN   - offset 297
+ char devmajor[8];   // TarConstants.DEVLEN     - offset 329
+ char devminor[8];   // TarConstants.DEVLEN     - offset 337
+ char prefix[155];   // TarConstants.PREFIXLEN  - offset 345
+ // Used if "name" field is not long enough to hold the path
+ char pad[12];       // NULs                    - offset 500
+ } header;
+ All unused bytes are set to null.
+ New-style GNU tar files are slightly different from the above.
+ For values of size larger than 077777777777L (11 7s)
+ or uid and gid larger than 07777777L (7 7s)
+ the sign bit of the first byte is set, and the rest of the
+ field is the binary representation of the number.
+ See TarUtils.parseOctalOrBinary.
+ 
+The C structure for a old GNU Tar Entry's header is:
+
+ struct oldgnu_header {
+ char unused_pad1[345]; // TarConstants.PAD1LEN_GNU       - offset 0
+ char atime[12];        // TarConstants.ATIMELEN_GNU      - offset 345
+ char ctime[12];        // TarConstants.CTIMELEN_GNU      - offset 357
+ char offset[12];       // TarConstants.OFFSETLEN_GNU     - offset 369
+ char longnames[4];     // TarConstants.LONGNAMESLEN_GNU  - offset 381
+ char unused_pad2;      // TarConstants.PAD2LEN_GNU       - offset 385
+ struct sparse sp[4];   // TarConstants.SPARSELEN_GNU     - offset 386
+ char isextended;       // TarConstants.ISEXTENDEDLEN_GNU - offset 482
+ char realsize[12];     // TarConstants.REALSIZELEN_GNU   - offset 483
+ char unused_pad[17];   // TarConstants.PAD3LEN_GNU       - offset 495
+ };
+ 
+Whereas, "struct sparse" is:
+ struct sparse {
+ char offset[12];   // offset 0
+ char numbytes[12]; // offset 12
+ };
+ 
+The C structure for a xstar (JÃ¶rg Schilling star) Tar Entry's header is:
+
+ struct star_header {
+  char name[100];               // offset   0
+  char mode[8];         // offset 100
+  char uid[8];          // offset 108
+  char gid[8];          // offset 116
+  char size[12];                // offset 124
+  char mtime[12];               // offset 136
+  char chksum[8];               // offset 148
+  char typeflag;                // offset 156
+  char linkname[100];           // offset 157
+  char magic[6];                // offset 257
+  char version[2];              // offset 263
+  char uname[32];               // offset 265
+  char gname[32];               // offset 297
+  char devmajor[8];             // offset 329
+  char devminor[8];             // offset 337
+  char prefix[131];             // offset 345
+  char atime[12];             // offset 476
+  char ctime[12];             // offset 488
+  char mfill[8];              // offset 500
+  char xmagic[4];             // offset 508  "tar"
+ };
+ 
+which is identical to new-style POSIX up to the first 130 bytes of the prefix.
+*/

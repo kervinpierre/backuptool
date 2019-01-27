@@ -1,11 +1,11 @@
 # Test version display
-#--version
+# --version
 
 # Test backup with a general example
-#--run-backup --ignore-lock --conf-file ./src/test/resources/dataset01/config00001-general-example.xml
+--run-backup --ignore-lock --conf-file ./src/test/resources/dataset01/config00001-windows-general-example.xml
 
 # Test that backup configurations without a chunk section still work
 #--run-backup --conf-file ./src/test/resources/dataset01/config00002-no-chunk-section.xml
 
 # Now with AWS
---run-backup --conf-file ./src/test/resources/dataset01/config00003-minimal-aws.xml
+#--run-backup --conf-file ./src/test/resources/dataset01/config00003-minimal-aws.xml

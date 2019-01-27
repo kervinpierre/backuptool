@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- CityMSP LLC CONFIDENTIAL
- DO NOT COPY
-
-Copyright (c) [2012] - [2019] CityMSP LLC <info@citymsp.nyc>
-All Rights Reserved.
-
-NOTICE:  All information contained herein is, and remains
- the property of CityMSP LLC and its suppliers,
- if any.  The intellectual and technical concepts contained
- herein are proprietary to CityMSP LLC and its suppliers and
- may be covered by U.S. and Foreign Patents, patents in process,
- and are protected by trade secret or copyright law.
- Dissemination of this information or reproduction of this material
- is strictly forbidden unless prior written permission is obtained
- from CityMSP LLC.
--->
+  ~ CityMSP LLC CONFIDENTIAL
+  ~ DO NOT COPY
+  ~
+  ~ Copyright (c) [2012] - [2019] CityMSP LLC <info@citymsp.nyc>
+  ~ All Rights Reserved.
+  ~
+  ~ NOTICE:  All information contained herein is, and remains
+  ~ the property of CityMSP LLC and its suppliers,
+  ~ if any.  The intellectual and technical concepts contained
+  ~ herein are proprietary to CityMSP LLC and its suppliers and
+  ~ may be covered by U.S. and Foreign Patents, patents in process,
+  ~ and are protected by trade secret or copyright law.
+  ~ Dissemination of this information or reproduction of this material
+  ~ is strictly forbidden unless prior written permission is obtained
+  ~ from CityMSP LLC.
+  ~
+  -->
 
 <backupConfig>
     <setName>default backup set</setName>
@@ -28,11 +29,11 @@ NOTICE:  All information contained herein is, and remains
     <itemList>
 
         <directory backupOptions="break_traversal" groupName="directory_a">
-            <path>/tmp/backupTest/a</path>
+            <path>c:/test/backuptool/test01/backupTest/a</path>
         </directory>
 
         <directory>
-            <path type="regex">/tmp/backupTest/b/</path>
+            <path type="regex">c:\\test\\backuptool\\test01\\backupTest\\b</path>
 
             <!-- Exclude all subdirectories named "logs" -->
             <directory>
@@ -48,7 +49,7 @@ NOTICE:  All information contained herein is, and remains
 
         <!-- Exclude these directories under "c", except backup all *.dat files -->
         <directory groupName="*">
-            <path type="regex" exclude="true">/tmp/backupTest/c/</path>
+            <path type="regex" exclude="true">c:\\test\\backuptool\\test01\\backupTest\\c</path>
 
             <file>
                 <path type="regex">.*\.dat</path>
@@ -56,33 +57,33 @@ NOTICE:  All information contained herein is, and remains
         </directory>
 
         <file>
-            <path>/tmp/backupTest/c/test.txt</path>
+            <path>c:/test/backuptool/test01/backupTest/c/test.txt</path>
         </file>
 
         <file>
-            <path exclude="true">/tmp/backupTest/c/logfile.log</path>
+            <path exclude="true">c:/test/backuptool/test01/backupTest/c/logfile.log</path>
         </file>
 
     </itemList>
 
     <stateFile>backupdata.xml</stateFile>
-    <holdingDirectoryPath>/tmp/backupTest/holdingDirectory</holdingDirectoryPath>
+    <holdingDirectoryPath>c:/test/backuptool/test01/backupTest/holdingDirectory</holdingDirectoryPath>
     <compressionScheme>gzip</compressionScheme>
     <chunk enable="true">
         <size>10</size>
         <sizeType>KB</sizeType>
     </chunk>
-    <logFile>/tmp/backupTest/log.txt</logFile>
+    <logFile>c:/test/backuptool/test01/backupTest/log.txt</logFile>
     <logEmail>kervin@citymsp.nyc</logEmail>
     <emailOnCompletion>true</emailOnCompletion>
     <priority>0</priority>
-    <lockFilePath>/tmp/backupTest/lock.file</lockFilePath>
+    <lockFilePath>c:/test/backuptool/test01/backupTest/lock.file</lockFilePath>
 
     <archiveNameRegex>.*?(\d+)+\.btaf</archiveNameRegex>
     <archiveNameComponent>integer_sequence</archiveNameComponent>
     <archiveNameTemplate>archive-0000.btaf</archiveNameTemplate>
 
-    <jobNameRegex>job-(\d{4}-\d{2}-\d{2}T\d{2}-\d{2}-\d{2}\.\d{3}Z)</jobNameRegex>
+    <jobNameRegex>job-(\d{4}-\d{2}-\d{2}T\d{2}-\d{2}-\d{2}\.\d{3,}Z)</jobNameRegex>
     <jobNameComponent>iso_timestamp</jobNameComponent>
     <jobNameTemplate>job-0000-00-00T00-00-00.000Z</jobNameTemplate>
 
@@ -95,7 +96,7 @@ NOTICE:  All information contained herein is, and remains
     -->
 
     <storageType enable="true">
-        <url>file:///tmp/backupTest/backups/default_backup_set</url>
+        <url>file://c:/test/backuptool/test01/backupTest/backups/default_backup_set</url>
         <user></user>
         <pass></pass>
     </storageType>

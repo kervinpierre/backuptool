@@ -1,24 +1,25 @@
 /*
- *  SLU Dev Inc. CONFIDENTIAL
+ *  CityMSP LLC CONFIDENTIAL
  *  DO NOT COPY
- * 
- * Copyright (c) [2012] - [2015] SLU Dev Inc. <info@sludev.com>
+ *
+ * Copyright (c) [2012] - [2019] CityMSP LLC <info@citymsp.nyc>
  * All Rights Reserved.
- * 
+ *
  * NOTICE:  All information contained herein is, and remains
- *  the property of SLU Dev Inc. and its suppliers,
+ *  the property of CityMSP LLC and its suppliers,
  *  if any.  The intellectual and technical concepts contained
- *  herein are proprietary to SLU Dev Inc. and its suppliers and
+ *  herein are proprietary to CityMSP LLC and its suppliers and
  *  may be covered by U.S. and Foreign Patents, patents in process,
  *  and are protected by trade secret or copyright law.
  *  Dissemination of this information or reproduction of this material
  *  is strictly forbidden unless prior written permission is obtained
- *  from SLU Dev Inc.
+ *  from CityMSP LLC
  */
 package com.fastsitesoft.backuptool.config.entities;
 
 import com.fastsitesoft.backuptool.BackupId;
 import com.fastsitesoft.backuptool.config.validators.BackupConfigValidator;
+import com.fastsitesoft.backuptool.enums.BackupToolIgnoreFlags;
 import com.fastsitesoft.backuptool.enums.BackupToolNameComponentType;
 import com.fastsitesoft.backuptool.enums.BackupToolResultStatus;
 import com.fastsitesoft.backuptool.enums.FSSBackupHashType;
@@ -29,7 +30,9 @@ import com.fastsitesoft.backuptool.utils.BackupToolException;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 import com.fastsitesoft.backuptool.utils.BackupToolResult;
@@ -76,6 +79,7 @@ public final class BackupConfig
     private final List<BackupToolNameComponentType> jobFileNameComponent;
     private final Pattern jobFileNamePattern;
     private final Path jobFileNameTemplate;
+    private final Set<BackupToolIgnoreFlags> m_backupToolIgnoreFlags;
     private final List<BackupToolNameComponentType> archiveFileNameComponent;
     private final BackupConfigStorageBackend storageBackend;
     private final BackupConfigEncryption encryption;
@@ -251,6 +255,10 @@ public final class BackupConfig
         return jobFileNameComponent;
     }
 
+    public Set<BackupToolIgnoreFlags> getIgnoreFlags()
+    {
+        return m_backupToolIgnoreFlags;
+    }
     /**
      * * An option for setting a file for standard out and standard error.
      * <p>
@@ -527,6 +535,7 @@ public final class BackupConfig
         jobFileNameComponent = null;
         jobFileNamePattern = null;
         jobFileNameTemplate = null;
+        m_backupToolIgnoreFlags = null;
     }
 
     private BackupConfig(
@@ -570,6 +579,7 @@ public final class BackupConfig
             final Pattern jobFileNamePattern,
             final List<BackupToolNameComponentType> jobFileNameComponent,
             final Path jobFileNameTemplate,
+            final Set<BackupToolIgnoreFlags> ignoreFlags,
             final FSSVerbosity verbosity,
             final BackupConfigStorageBackend storageBackend,
             final UsageConfig usageConfig) throws BackupToolException
@@ -580,7 +590,9 @@ public final class BackupConfig
         }
         else
         {
-            throw new BackupToolException("setName cannot be null");
+            // NB Don't validate here
+            // throw new BackupToolException("setName cannot be null");
+            this.setName = "<NONE>";
         }
 
         if( holdingDirectory != null )
@@ -589,7 +601,8 @@ public final class BackupConfig
         }
         else
         {
-            throw new BackupToolException("holding directory cannot be null");
+            //throw new BackupToolException("holding directory cannot be null");
+            this.holdingDirectory = null;
         }
 
         if( backupReportPath != null )
@@ -871,6 +884,15 @@ public final class BackupConfig
             this.archiveFileNameTemplate = null;
         }
 
+        if( archiveFileNameComponent != null )
+        {
+            this.m_backupToolIgnoreFlags = ignoreFlags;
+        }
+        else
+        {
+            this.m_backupToolIgnoreFlags = new HashSet<>();
+        }
+
         if( jobFileNamePattern != null )
         {
             this.jobFileNamePattern = jobFileNamePattern;
@@ -1092,6 +1114,7 @@ public final class BackupConfig
             final Pattern jobFileNamePattern,
             final List<BackupToolNameComponentType> jobFileNameComponent,
             final Path jobFileNameTemplate,
+            final Set<BackupToolIgnoreFlags> ignoreFlags,
             final FSSVerbosity verbosity,
             final BackupConfigStorageBackend storageBackend,
             final UsageConfig usageConfig) throws BackupToolException
@@ -1137,6 +1160,7 @@ public final class BackupConfig
                 jobFileNamePattern,
                 jobFileNameComponent,
                 jobFileNameTemplate,
+                ignoreFlags,
                 verbosity,
                 storageBackend,
                 usageConfig
@@ -1189,6 +1213,7 @@ public final class BackupConfig
             final String jobNamePattern,
             final String jobNameTemplate,
             final String jobNameComp,
+            final Set<BackupToolIgnoreFlags> ignoreFlags,
             final String verbosity,
             final BackupConfigStorageBackend storageBackend,
             final UsageConfig usageConfig) throws BackupToolException
@@ -1487,6 +1512,24 @@ public final class BackupConfig
                 currJobNameComp = BackupConfigValidator.normalizeJobNameComp(jobNameComp);
             }
 
+            Set<BackupToolIgnoreFlags> currIgnoreFlags = null;
+            if( ignoreFlags == null || ignoreFlags.isEmpty() )
+            {
+                if( orig != null && orig.getFileList() != null && !orig.getIgnoreFlags().isEmpty() )
+                {
+                    currIgnoreFlags = orig.getIgnoreFlags();
+                }
+                else
+                {
+                    // Default or error
+                    log.debug("Missing BackupConfig Ignore flags.");
+                }
+            }
+            else
+            {
+                currIgnoreFlags = ignoreFlags;
+            }
+
             Path currJobNameTemplate =  null;
             if( StringUtils.isBlank(jobNameTemplate) )
             {
@@ -1736,6 +1779,7 @@ public final class BackupConfig
                     currJobNamePattern,
                     currJobNameComp,
                     currJobNameTemplate,
+                    currIgnoreFlags,
                     currVerb,
                     currStoreBackend,
                     usageConfig

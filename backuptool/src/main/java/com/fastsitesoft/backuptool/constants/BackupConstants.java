@@ -1,19 +1,19 @@
 /*
- *  SLU Dev Inc. CONFIDENTIAL
+ *  CityMSP LLC CONFIDENTIAL
  *  DO NOT COPY
  * 
- * Copyright (c) [2012] - [2014] SLU Dev Inc. <info@sludev.com>
+ * Copyright (c) [2012] - [2019] CityMSP LLC <info@citymsp.nyc>
  * All Rights Reserved.
  * 
  * NOTICE:  All information contained herein is, and remains
- *  the property of SLU Dev Inc. and its suppliers,
+ *  the property of CityMSP LLC and its suppliers,
  *  if any.  The intellectual and technical concepts contained
- *  herein are proprietary to SLU Dev Inc. and its suppliers and
+ *  herein are proprietary to CityMSP LLC and its suppliers and
  *  may be covered by U.S. and Foreign Patents, patents in process,
  *  and are protected by trade secret or copyright law.
  *  Dissemination of this information or reproduction of this material
  *  is strictly forbidden unless prior written permission is obtained
- *  from SLU Dev Inc.
+ *  from CityMSP LLC
  */
 
 package com.fastsitesoft.backuptool.constants;
@@ -28,7 +28,7 @@ import com.fastsitesoft.backuptool.enums.FSSVerbosity;
  */
 public final class BackupConstants
 {
-    public static final String PROD_BUILD          = "20150517-01";
+    public static final String PROD_BUILD          = "20190106-01";
     public static final String PROD_VERSION        = "1.2";
     public static final String PROD_LONG_NAME      = "Backup Tool";
     
