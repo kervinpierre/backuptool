@@ -455,8 +455,9 @@ public class BackupToolInitialize
                     currArchiveNameComp,
                     currArchiveNameTemplate,
                     currJobNamePattern,
-                    currJobNameComp,
                     currJobNameTemplate,
+                    currJobNameComp,
+                    null,
                     currVerbose, // verbosity,
                     null, // currBackendURL, // Storage
                     currUsageConf // usageConfig

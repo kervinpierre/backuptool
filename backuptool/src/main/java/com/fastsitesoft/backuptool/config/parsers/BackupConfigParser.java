@@ -403,6 +403,7 @@ public class BackupConfigParser
                 currJobNamePattern, // jobNamePattern
                 currJobNameTemplate, // jobNameComp
                 currJobNameComponent, // jobNameTemplate
+                null,
                 null, // verbosity,
                 currStorage,
                 null // usageConfig

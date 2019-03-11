@@ -42,148 +42,148 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * This class represents the configuration for a backup set.
+ * This class represents the configuration for a m_backup set.
  *
  * @author Kervin Pierre <info@sludev.com>
  */
 public final class BackupConfig
 {
-    private static final Logger log
+    private static final Logger LOGGER
             = LogManager.getLogger(BackupConfig.class);
 
-    private final String setName;
-    private final FSSBackupType setType;
-    private final List<BackupConfigDirectory> dirList;
-    private final List<BackupConfigFile> fileList;
-    private final Path stateFileName;
-    private final Path errorFileName;
-    private final Path holdingDirectory;
-    private final BackupId backupId;
-    private final Boolean useChecksum;
-    private final FSSBackupHashType checksumType;
-    private final Boolean useModifiedDate;
-    private final BackupConfigCompression compression;
-    private final BackupConfigChunk chunk;
-    private final FSSReportType backupReportType;
-    private final Path backupReportPath;
-    private final Boolean restore;
-    private final Boolean backup;
-    private final Boolean preservePermissions;
-    private final Boolean preserveOwnership;
-    private final Boolean noClobber;
-    private final Boolean backupDescribe;
-    private final Boolean backupStatus;
-    private final Path restoreDestination;
-    private final Pattern archiveFileNamePattern;
-    private final Path archiveFileNameTemplate;
-    private final List<BackupToolNameComponentType> jobFileNameComponent;
-    private final Pattern jobFileNamePattern;
-    private final Path jobFileNameTemplate;
+    private final String m_setName;
+    private final FSSBackupType m_setType;
+    private final List<BackupConfigDirectory> m_dirList;
+    private final List<BackupConfigFile> m_fileList;
+    private final Path m_stateFileName;
+    private final Path m_errorFileName;
+    private final Path m_holdingDirectory;
+    private final BackupId m_backupId;
+    private final Boolean m_useChecksum;
+    private final FSSBackupHashType m_checksumType;
+    private final Boolean m_useModifiedDate;
+    private final BackupConfigCompression m_compression;
+    private final BackupConfigChunk m_chunk;
+    private final FSSReportType m_backupReportType;
+    private final Path m_backupReportPath;
+    private final Boolean m_restore;
+    private final Boolean m_backup;
+    private final Boolean m_preservePermissions;
+    private final Boolean m_preserveOwnership;
+    private final Boolean m_noClobber;
+    private final Boolean m_backupDescribe;
+    private final Boolean m_backupStatus;
+    private final Path m_restoreDestination;
+    private final Pattern m_archiveFileNamePattern;
+    private final Path m_archiveFileNameTemplate;
+    private final List<BackupToolNameComponentType> m_jobFileNameComponent;
+    private final Pattern m_jobFileNamePattern;
+    private final Path m_jobFileNameTemplate;
     private final Set<BackupToolIgnoreFlags> m_backupToolIgnoreFlags;
-    private final List<BackupToolNameComponentType> archiveFileNameComponent;
-    private final BackupConfigStorageBackend storageBackend;
-    private final BackupConfigEncryption encryption;
+    private final List<BackupToolNameComponentType> m_archiveFileNameComponent;
+    private final BackupConfigStorageBackend m_storageBackend;
+    private final BackupConfigEncryption m_encryption;
 
     /**
-     * Application logging verbosity.
+     * Application logging m_verbosity.
      */
-    private final FSSVerbosity verbosity;
+    private final FSSVerbosity m_verbosity;
 
 
     /**
      * File for redirecting StdOut and StdErr
      */
-    private final Path outputFile;
+    private final Path m_outputFile;
 
     /**
      * Do not change anything on the server, just simulate.
      */
-    private final Boolean dryRun;
+    private final Boolean m_dryRun;
 
     /**
      * Ignore existing lock file
      */
-    private final Boolean ignoreLock;
+    private final Boolean m_ignoreLock;
 
     /**
      * If set to true, the component may send out status emails
      */
-    private final Boolean emailOnCompletion;
+    private final Boolean m_emailOnCompletion;
 
     /**
      * List of contacts to be emailed if needed.
      */
-    private final List<String> emailContacts;
+    private final List<String> m_emailContacts;
 
     /**
-     * The process priority of the agent
+     * The process m_priority of the agent
      */
-    private final Integer priority;
+    private final Integer m_priority;
 
     /**
      * Lock file for allowing single program access.
      */
-    private final Path lockFilePath;
+    private final Path m_lockFilePath;
 
     /**
      * If true run the process as a background service instead of an interactive
      * process.
      */
-    private final Boolean runAsService;
+    private final Boolean m_runAsService;
 
     /**
      * Display the version of the application then exit.
      */
-    private final Boolean displayVersion;
+    private final Boolean m_displayVersion;
 
     /**
      * Display the usage options for the application the exit.
      */
-    private final Boolean displayUsage;
+    private final Boolean m_displayUsage;
 
     /**
      * Holds the 'Display Usage' options
      */
-    private final UsageConfig usageConfig;
+    private final UsageConfig m_usageConfig;
 
     public UsageConfig getUsageConfig()
     {
-        return usageConfig;
+        return m_usageConfig;
     }
 
     public Path getLockFilePath()
     {
-        return lockFilePath;
+        return m_lockFilePath;
     }
 
     public Integer getPriority()
     {
-        return priority;
+        return m_priority;
     }
 
     public Boolean isEmailOnCompletion()
     {
-        return emailOnCompletion;
+        return m_emailOnCompletion;
     }
 
     public Boolean isPreserveOwnership()
     {
-        return preserveOwnership;
+        return m_preserveOwnership;
     }
 
     public Boolean isPreservePermissions()
     {
-        return preservePermissions;
+        return m_preservePermissions;
     }
 
     public Boolean isBackupDescribe()
     {
-        return backupDescribe;
+        return m_backupDescribe;
     }
 
     public Boolean isBackupStatus()
     {
-        return backupStatus;
+        return m_backupStatus;
     }
 
     /**
@@ -192,67 +192,67 @@ public final class BackupConfig
      */
     public Boolean isDryRun()
     {
-        return dryRun;
+        return m_dryRun;
     }
 
     public Boolean isIgnoreLock()
     {
-        return ignoreLock==null?false:ignoreLock;
+        return m_ignoreLock ==null?false: m_ignoreLock;
     }
 
     public FSSVerbosity getVerbosity()
     {
-        return verbosity;
+        return m_verbosity;
     }
 
     public Boolean isRunAsService()
     {
-        return runAsService;
+        return m_runAsService;
     }
 
     public Boolean isDisplayVersion()
     {
-        return displayVersion==null?false:displayVersion;
+        return m_displayVersion ==null?false: m_displayVersion;
     }
 
     public Boolean isDisplayUsage()
     {
-        return displayUsage==null?false:displayUsage;
+        return m_displayUsage ==null?false: m_displayUsage;
     }
 
     public Boolean isNoClobber()
     {
-        return noClobber;
+        return m_noClobber;
     }
 
     public Pattern getArchiveFileNamePattern()
     {
-        return archiveFileNamePattern;
+        return m_archiveFileNamePattern;
     }
 
     public List<BackupToolNameComponentType> getArchiveFileNameComponent()
     {
-        return archiveFileNameComponent;
+        return m_archiveFileNameComponent;
     }
 
     public Path getArchiveFileNameTemplate()
     {
-        return archiveFileNameTemplate;
+        return m_archiveFileNameTemplate;
     }
 
     public Pattern getJobFileNamePattern()
     {
-        return jobFileNamePattern;
+        return m_jobFileNamePattern;
     }
 
     public Path getJobFileNameTemplate()
     {
-        return jobFileNameTemplate;
+        return m_jobFileNameTemplate;
     }
 
     public List<BackupToolNameComponentType> getJobFileNameComponent()
     {
-        return jobFileNameComponent;
+        return m_jobFileNameComponent;
     }
 
     public Set<BackupToolIgnoreFlags> getIgnoreFlags()
@@ -267,7 +267,7 @@ public final class BackupConfig
      * only takes effect after command line arguments are parsed.  This means we
      * would have missed the first, sometimes important, logs going to the console.
      * <p>
-     * Use "-DFSSOUTREDIRECT" to catch log messages prior to command line argument
+     * Use "-DFSSOUTREDIRECT" to catch LOGGER messages prior to command line argument
      * parsing.
      * <p>
      * The file we will append the standard out and standard error to.
@@ -275,7 +275,7 @@ public final class BackupConfig
      */
     public Path getOutputFile()
     {
-        return outputFile;
+        return m_outputFile;
     }
 
     /**
@@ -285,11 +285,11 @@ public final class BackupConfig
      */
     public Path getHoldingDirectory()
     {
-        return holdingDirectory;
+        return m_holdingDirectory;
     }
 
     /**
-     * An ID that uniquely identifies a backup in a single set.
+     * An ID that uniquely identifies a m_backup in a single set.
      * <p>
      * This is a unique ID relating to all backups at a specified location.
      * Please note this ID is not guaranteed to be unique across all backups in entirety.
@@ -298,11 +298,11 @@ public final class BackupConfig
      */
     public BackupId getBackupId()
     {
-        return backupId;
+        return m_backupId;
     }
 
     /**
-     * Use file checksums during differential backup related operations. Default for
+     * Use file checksums during differential m_backup related operations. Default for
      * this flag is normally 'on'.  But if getUseModifiedDate() flag is on, then
      * the default for this flag is 'off'.
      *
@@ -310,7 +310,7 @@ public final class BackupConfig
      */
     public Boolean getUseChecksum()
     {
-        return useChecksum;
+        return m_useChecksum;
     }
 
     /**
@@ -320,11 +320,11 @@ public final class BackupConfig
      */
     public FSSBackupHashType getChecksumType()
     {
-        return checksumType;
+        return m_checksumType;
     }
 
     /**
-     * Use file-system modified-date during differential backup related operations.
+     * Use file-system modified-date during differential m_backup related operations.
      * Default for this flag is normally 'on'.  But if getUseChecksum() flag is on,
      * then the default for this flag is 'off'.
      *
@@ -332,7 +332,7 @@ public final class BackupConfig
      */
     public Boolean getUseModifiedDate()
     {
-        return useModifiedDate;
+        return m_useModifiedDate;
     }
 
     /**
@@ -342,43 +342,43 @@ public final class BackupConfig
      */
     public FSSReportType getBackupReportType()
     {
-        return backupReportType;
+        return m_backupReportType;
     }
 
 
     /**
-     * The location of the backup report.
+     * The location of the m_backup report.
      *
      * @return
      */
     public Path getBackupReportPath()
     {
-        return backupReportPath;
+        return m_backupReportPath;
     }
 
     /**
-     * Restores a backup to the file-system.
+     * Restores a m_backup to the file-system.
      *
      * @return
      */
     public Boolean getRestore()
     {
-        return restore==null?false:restore;
+        return m_restore ==null?false: m_restore;
     }
 
     /**
-     * Run the backup described in the config file.
+     * Run the m_backup described in the config file.
      *
      * @return
      */
     public Boolean getBackup()
     {
-        return backup==null?false:backup;
+        return m_backup ==null?false: m_backup;
     }
 
     public List<String> getEmailContacts()
     {
-        return emailContacts;
+        return m_emailContacts;
     }
 
     /**
@@ -388,71 +388,71 @@ public final class BackupConfig
      */
     public Path getRestoreDestination()
     {
-        return restoreDestination;
+        return m_restoreDestination;
     }
 
 
     /**
-     * The name of the current backup set.
+     * The name of the current m_backup set.
      *
-     * @return the setName
+     * @return the m_setName
      */
     public String getSetName()
     {
-        return setName;
+        return m_setName;
     }
 
     /**
-     * @return the setType
+     * @return the m_setType
      */
     public FSSBackupType getSetType()
     {
-        return setType;
+        return m_setType;
     }
 
     /**
      * The list of backups to be backed up in the current set
      *
-     * @return the dirList
+     * @return the m_dirList
      */
     public List<BackupConfigDirectory> getDirList()
     {
-        return dirList;
+        return m_dirList;
     }
 
     /**
-     * The name of the file that will hold status information relating to a backup set.
+     * The name of the file that will hold status information relating to a m_backup set.
      *
-     * @return the stateFileName
+     * @return the m_stateFileName
      */
     public Path getStateFileName()
     {
-        return stateFileName;
+        return m_stateFileName;
     }
 
     public Path getErrorFileName()
     {
-        return errorFileName;
+        return m_errorFileName;
     }
 
     /**
-     * The type of compression used in the current backup set
+     * The type of m_compression used in the current m_backup set
      *
-     * @return the compression
+     * @return the m_compression
      */
     public BackupConfigCompression getCompression()
     {
-        return compression;
+        return m_compression;
     }
 
     /**
-     * The chunk configuration used in the current backup set, if any.
+     * The m_chunk configuration used in the current m_backup set, if any.
      *
-     * @return the chunk
+     * @return the m_chunk
      */
     public BackupConfigChunk getChunk()
     {
-        return chunk;
+        return m_chunk;
     }
 
     /**
@@ -462,83 +462,144 @@ public final class BackupConfig
      */
     public List<BackupConfigFile> getFileList()
     {
-        return fileList;
+        return m_fileList;
     }
 
     /**
      * Stores various information about the current backend being used.
      * <p>
-     * This includes the 'Backup Location URL', which is the path to the backup
-     * folder for the backup being created containing all the new files
-     * ( compressed, encrypted, etc. ) created during the backup.
+     * This includes the 'Backup Location URL', which is the path to the m_backup
+     * folder for the m_backup being created containing all the new files
+     * ( compressed, encrypted, etc. ) created during the m_backup.
      *
      * @return
      */
     public BackupConfigStorageBackend getStorageBackend()
     {
-        return storageBackend;
+        return m_storageBackend;
     }
 
     /**
-     * The type of encryption used on disk ( at rest ) for the current backup set.
+     * The type of m_encryption used on disk ( at rest ) for the current m_backup set.
      *
      * @return
      */
     public BackupConfigEncryption getEncryption()
     {
-        return encryption;
+        return m_encryption;
     }
 
     private BackupConfig( UsageConfig conf )
     {
-        usageConfig = conf;
-        displayUsage = true;
+        m_usageConfig = conf;
+        m_displayUsage = true;
 
-        emailContacts = null;
-        setName = null;
-        setType = null;
-        dirList = null;
-        fileList = null;
-        stateFileName = null;
-        errorFileName = null;
-        holdingDirectory = null;
-        backupId = null;
-        useChecksum = null;
-        checksumType = null;
-        useModifiedDate = null;
-        compression = null;
-        chunk = null;
-        backupReportType = null;
-        backupReportPath = null;
-        restore = null;
-        backup = null;
-        preservePermissions = null;
-        preserveOwnership = null;
-        noClobber = null;
-        backupDescribe = null;
-        backupStatus = null;
-        restoreDestination = null;
-        storageBackend = null;
-        encryption = null;
-        verbosity = null;
-        outputFile = null;
-        dryRun = null;
-        ignoreLock = null;
-        emailOnCompletion = null;
-        priority = null;
-        lockFilePath = null;
-        runAsService = null;
-        displayVersion = null;
-        archiveFileNameComponent = null;
-        archiveFileNamePattern = null;
-        archiveFileNameTemplate = null;
-        jobFileNameComponent = null;
-        jobFileNamePattern = null;
-        jobFileNameTemplate = null;
+        m_emailContacts = null;
+        m_setName = null;
+        m_setType = null;
+        m_dirList = null;
+        m_fileList = null;
+        m_stateFileName = null;
+        m_errorFileName = null;
+        m_holdingDirectory = null;
+        m_backupId = null;
+        m_useChecksum = null;
+        m_checksumType = null;
+        m_useModifiedDate = null;
+        m_compression = null;
+        m_chunk = null;
+        m_backupReportType = null;
+        m_backupReportPath = null;
+        m_restore = null;
+        m_backup = null;
+        m_preservePermissions = null;
+        m_preserveOwnership = null;
+        m_noClobber = null;
+        m_backupDescribe = null;
+        m_backupStatus = null;
+        m_restoreDestination = null;
+        m_storageBackend = null;
+        m_encryption = null;
+        m_verbosity = null;
+        m_outputFile = null;
+        m_dryRun = null;
+        m_ignoreLock = null;
+        m_emailOnCompletion = null;
+        m_priority = null;
+        m_lockFilePath = null;
+        m_runAsService = null;
+        m_displayVersion = null;
+        m_archiveFileNameComponent = null;
+        m_archiveFileNamePattern = null;
+        m_archiveFileNameTemplate = null;
+        m_jobFileNameComponent = null;
+        m_jobFileNamePattern = null;
+        m_jobFileNameTemplate = null;
         m_backupToolIgnoreFlags = null;
     }
 
+    public Boolean getEmailOnCompletion()
+    {
+        return m_emailOnCompletion;
+    }
+
+    public Boolean getDryRun()
+    {
+        return m_dryRun;
+    }
+
+    public Boolean getIgnoreLock()
+    {
+        return m_ignoreLock;
+    }
+
+    public Boolean getRunAsService()
+    {
+        return m_runAsService;
+    }
+
+    public Boolean getDisplayUsage()
+    {
+        return m_displayUsage;
+    }
+
+    public Boolean getDisplayVersion()
+    {
+        return m_displayVersion;
+    }
+
+    public Boolean getPreservePermissions()
+    {
+        return m_preservePermissions;
+    }
+
+    public Boolean getPreserveOwnership()
+    {
+        return m_preserveOwnership;
+    }
+
+    public Boolean getNoClobber()
+    {
+        return m_noClobber;
+    }
+
+    public Boolean getBackupDescribe()
+    {
+        return m_backupDescribe;
+    }
+
+    public Boolean getBackupStatus()
+    {
+        return m_backupStatus;
+    }
+
+    public Set<BackupToolIgnoreFlags> getBackupToolIgnoreFlags()
+    {
+        return m_backupToolIgnoreFlags;
+    }
+
     private BackupConfig(
+            final BackupConfig orig,
             final String setName,
             final Integer priority,
             final Boolean useChecksum,
@@ -586,307 +647,477 @@ public final class BackupConfig
     {
         if( setName != null )
         {
-            this.setName = setName;
+            this.m_setName = setName;
+        }
+        else if( (orig != null)
+                && (orig.getSetName() != null))
+        {
+            this.m_setName = orig.getSetName();
         }
         else
         {
             // NB Don't validate here
-            // throw new BackupToolException("setName cannot be null");
-            this.setName = "<NONE>";
+            // throw new BackupToolException("m_setName cannot be null");
+            this.m_setName = "<NONE>";
         }
 
         if( holdingDirectory != null )
         {
-            this.holdingDirectory = holdingDirectory;
+            this.m_holdingDirectory = holdingDirectory;
+        }
+        else if( (orig != null)
+                && (orig.getHoldingDirectory() != null))
+        {
+            this.m_holdingDirectory = orig.getHoldingDirectory();
         }
         else
         {
             //throw new BackupToolException("holding directory cannot be null");
-            this.holdingDirectory = null;
+            this.m_holdingDirectory = null;
         }
 
         if( backupReportPath != null )
         {
-            this.backupReportPath = backupReportPath;
+            this.m_backupReportPath = backupReportPath;
+        }
+        else if( (orig != null)
+                && (orig.getBackupReportPath() != null))
+        {
+            this.m_backupReportPath = orig.getBackupReportPath();
         }
         else
         {
-            this.backupReportPath = null;
+            this.m_backupReportPath = null;
         }
 
         if( restoreDestination != null )
         {
-            this.restoreDestination = restoreDestination;
+            this.m_restoreDestination = restoreDestination;
+        }
+        else if( (orig != null)
+                && (orig.getRestoreDestination() != null))
+        {
+            this.m_restoreDestination = orig.getRestoreDestination();
         }
         else
         {
-            this.restoreDestination = null;
+            this.m_restoreDestination = null;
         }
 
         if( outputFile != null )
         {
-            this.outputFile = outputFile;
+            this.m_outputFile = outputFile;
+        }
+        else if( (orig != null)
+                && (orig.getOutputFile() != null))
+        {
+            this.m_outputFile = orig.getOutputFile();
         }
         else
         {
-            this.outputFile = null;
+            this.m_outputFile = null;
         }
 
         if( lockFilePath != null )
         {
-            this.lockFilePath = lockFilePath;
+            this.m_lockFilePath = lockFilePath;
+        }
+        else if( (orig != null)
+                && (orig.getLockFilePath() != null))
+        {
+            this.m_lockFilePath = orig.getLockFilePath();
         }
         else
         {
-            this.lockFilePath = null;
+            this.m_lockFilePath = null;
         }
 
         if( stateFileName != null )
         {
-            this.stateFileName = stateFileName;
+            this.m_stateFileName = stateFileName;
+        }
+        else if( (orig != null)
+                && (orig.getStateFileName() != null))
+        {
+            this.m_stateFileName = orig.getStateFileName();
         }
         else
         {
-            this.stateFileName = null;
+            this.m_stateFileName = null;
         }
 
         if( errorFileName != null )
         {
-            this.errorFileName = errorFileName;
+            this.m_errorFileName = errorFileName;
+        }
+        else if( (orig != null)
+                && (orig.getErrorFileName() != null))
+        {
+            this.m_errorFileName = orig.getErrorFileName();
         }
         else
         {
-            this.errorFileName = null;
+            this.m_errorFileName = null;
         }
 
         if( priority != null )
         {
-            this.priority = priority;
+            this.m_priority = priority;
+        }
+        else if( (orig != null)
+                && (orig.getPriority() != null))
+        {
+            this.m_priority = orig.getPriority();
         }
         else
         {
-            this.priority = 0;
+            this.m_priority = 0;
         }
 
         if( backupId != null )
         {
-            this.backupId = backupId;
+            this.m_backupId = backupId;
+        }
+        else if( (orig != null)
+                && (orig.getBackupId() != null))
+        {
+            this.m_backupId = orig.getBackupId();
         }
         else
         {
-            this.backupId = null;
+            this.m_backupId = null;
         }
 
         if( useChecksum != null )
         {
-            this.useChecksum = useChecksum;
+            this.m_useChecksum = useChecksum;
+        }
+        else if( (orig != null)
+                && (orig.getUseChecksum() != null))
+        {
+            this.m_useChecksum = orig.getUseChecksum();
         }
         else
         {
-            this.useChecksum = null;
+            this.m_useChecksum = null;
         }
 
         if( useModifiedDate != null )
         {
-            this.useModifiedDate = useModifiedDate;
+            this.m_useModifiedDate = useModifiedDate;
+        }
+        else if( (orig != null)
+                && (orig.getUseModifiedDate() != null))
+        {
+            this.m_useModifiedDate = orig.getUseModifiedDate();
         }
         else
         {
-            this.useModifiedDate = null;
+            this.m_useModifiedDate = null;
         }
 
         if( backup != null )
         {
-            this.backup = backup;
+            this.m_backup = backup;
+        }
+        else if( (orig != null)
+                && (orig.getBackup() != null))
+        {
+            this.m_backup = orig.getBackup();
         }
         else
         {
-            this.backup = null;
+            this.m_backup = null;
         }
 
         if( restore != null )
         {
-            this.restore = restore;
+            this.m_restore = restore;
+        }
+        else if( (orig != null)
+                && (orig.getRestore() != null))
+        {
+            this.m_restore = orig.getRestore();
         }
         else
         {
-            this.restore = null;
+            this.m_restore = null;
         }
 
         if( emailOnCompletion != null )
         {
-            this.emailOnCompletion = emailOnCompletion;
+            this.m_emailOnCompletion = emailOnCompletion;
+        }
+        else if( (orig != null)
+                && (orig.getEmailOnCompletion() != null))
+        {
+            this.m_emailOnCompletion = orig.getEmailOnCompletion();
         }
         else
         {
-            this.emailOnCompletion = null;
+            this.m_emailOnCompletion = null;
         }
 
         if( dryRun != null )
         {
-            this.dryRun = dryRun;
+            this.m_dryRun = dryRun;
+        }
+        else if( (orig != null)
+                && (orig.getDryRun() != null))
+        {
+            this.m_dryRun = orig.getDryRun();
         }
         else
         {
-            this.dryRun = null;
+            this.m_dryRun = null;
         }
 
         if( ignoreLock != null )
         {
-            this.ignoreLock = ignoreLock;
+            this.m_ignoreLock = ignoreLock;
+        }
+        else if( (orig != null)
+                && (orig.getIgnoreLock() != null))
+        {
+            this.m_ignoreLock = orig.getIgnoreLock();
         }
         else
         {
-            this.ignoreLock = null;
+            this.m_ignoreLock = null;
         }
 
         if( runAsService != null )
         {
-            this.runAsService = runAsService;
+            this.m_runAsService = runAsService;
+        }
+        else if( (orig != null)
+                && (orig.getRunAsService() != null))
+        {
+            this.m_runAsService = orig.getRunAsService();
         }
         else
         {
-            this.runAsService = null;
+            this.m_runAsService = null;
         }
 
         if( displayUsage != null )
         {
-            this.displayUsage = displayUsage;
+            this.m_displayUsage = displayUsage;
+        }
+        else if( (orig != null)
+                && (orig.getDisplayUsage() != null))
+        {
+            this.m_displayUsage = orig.getDisplayUsage();
         }
         else
         {
-            this.displayUsage = null;
+            this.m_displayUsage = null;
         }
 
         if( displayVersion != null )
         {
-            this.displayVersion = displayVersion;
+            this.m_displayVersion = displayVersion;
+        }
+        else if( (orig != null)
+                && (orig.getDisplayVersion() != null))
+        {
+            this.m_displayVersion = orig.getDisplayVersion();
         }
         else
         {
-            this.displayVersion = null;
+            this.m_displayVersion = null;
         }
 
         if( preserveOwnership != null )
         {
-            this.preserveOwnership = preserveOwnership;
+            this.m_preserveOwnership = preserveOwnership;
+        }
+        else if( (orig != null)
+                && (orig.getPreserveOwnership() != null))
+        {
+            this.m_preserveOwnership= orig.getPreserveOwnership();
         }
         else
         {
-            this.preserveOwnership = null;
+            this.m_preserveOwnership = null;
         }
 
         if( preservePermissions != null )
         {
-            this.preservePermissions = preservePermissions;
+            this.m_preservePermissions = preservePermissions;
+        }
+        else if( (orig != null)
+                && (orig.getPreservePermissions() != null))
+        {
+            this.m_preservePermissions = orig.getPreservePermissions();
         }
         else
         {
-            this.preservePermissions = null;
+            this.m_preservePermissions = null;
         }
 
         if( noClobber != null )
         {
-            this.noClobber = noClobber;
+            this.m_noClobber = noClobber;
+        }
+        else if( (orig != null)
+                && (orig.getNoClobber() != null))
+        {
+            this.m_noClobber = orig.getNoClobber();
         }
         else
         {
-            this.noClobber = null;
+            this.m_noClobber = null;
         }
 
         if( backupDescribe != null )
         {
-            this.backupDescribe = backupDescribe;
+            this.m_backupDescribe = backupDescribe;
+        }
+        else if( (orig != null)
+                && (orig.getBackupDescribe() != null))
+        {
+            this.m_backupDescribe = orig.getBackupDescribe();
         }
         else
         {
-            this.backupDescribe = null;
+            this.m_backupDescribe = null;
         }
 
         if( backupStatus != null )
         {
-            this.backupStatus = backupStatus;
+            this.m_backupStatus = backupStatus;
+        }
+        else if( (orig != null)
+                && (orig.getBackupStatus() != null))
+        {
+            this.m_backupStatus = orig.getBackupStatus();
         }
         else
         {
-            this.backupStatus = null;
+            this.m_backupStatus = null;
         }
 
         if( compression != null )
         {
-            this.compression = compression;
+            this.m_compression = compression;
+        }
+        else if( (orig != null)
+                && (orig.getCompression() != null))
+        {
+            this.m_compression = orig.getCompression();
         }
         else
         {
-            this.compression = null;
+            this.m_compression = null;
         }
 
         if( backupReportType != null )
         {
-            this.backupReportType = backupReportType;
+            this.m_backupReportType = backupReportType;
+        }
+        else if( (orig != null)
+                && (orig.getBackupReportType() != null))
+        {
+            this.m_backupReportType = orig.getBackupReportType();
         }
         else
         {
-            this.backupReportType = null;
+            this.m_backupReportType = null;
         }
 
         if( checksumType != null )
         {
-            this.checksumType = checksumType;
+            this.m_checksumType = checksumType;
+        }
+        else if( (orig != null)
+                && (orig.getChecksumType() != null))
+        {
+            this.m_checksumType = orig.getChecksumType();
         }
         else
         {
-            this.checksumType = null;
+            this.m_checksumType = null;
         }
 
         if( verbosity != null )
         {
-            this.verbosity = verbosity;
+            this.m_verbosity = verbosity;
+        }
+        else if( (orig != null)
+                && (orig.getVerbosity() != null))
+        {
+            this.m_verbosity = orig.getVerbosity();
         }
         else
         {
-            this.verbosity = null;
+            this.m_verbosity = null;
         }
 
         if( emailContacts != null )
         {
-            this.emailContacts = emailContacts;
+            this.m_emailContacts = emailContacts;
+        }
+        else if( (orig != null)
+                && (orig.getEmailContacts() != null))
+        {
+            this.m_emailContacts = orig.getEmailContacts();
         }
         else
         {
-            this.emailContacts = null;
+            this.m_emailContacts = null;
         }
 
         if( archiveFileNamePattern != null )
         {
-            this.archiveFileNamePattern = archiveFileNamePattern;
+            this.m_archiveFileNamePattern = archiveFileNamePattern;
+        }
+        else if( (orig != null)
+                && (orig.getArchiveFileNamePattern() != null))
+        {
+            this.m_archiveFileNamePattern = orig.getArchiveFileNamePattern();
         }
         else
         {
-            this.archiveFileNamePattern = null;
+            this.m_archiveFileNamePattern = null;
         }
 
         if( archiveFileNameComponent != null )
         {
-            this.archiveFileNameComponent = archiveFileNameComponent;
+            this.m_archiveFileNameComponent = archiveFileNameComponent;
+        }
+        else if( (orig != null)
+                && (orig.getArchiveFileNameComponent() != null))
+        {
+            this.m_archiveFileNameComponent = orig.getArchiveFileNameComponent();
         }
         else
         {
-            this.archiveFileNameComponent = new ArrayList<>();
+            this.m_archiveFileNameComponent = new ArrayList<>();
         }
 
         if( archiveFileNameTemplate != null )
         {
-            this.archiveFileNameTemplate = archiveFileNameTemplate;
+            this.m_archiveFileNameTemplate = archiveFileNameTemplate;
+        }
+        else if( (orig != null)
+                && (orig.getArchiveFileNameTemplate() != null))
+        {
+            this.m_archiveFileNameTemplate = orig.getArchiveFileNameTemplate();
         }
         else
         {
-            this.archiveFileNameTemplate = null;
+            this.m_archiveFileNameTemplate = null;
         }
 
         if( archiveFileNameComponent != null )
         {
             this.m_backupToolIgnoreFlags = ignoreFlags;
+        }
+        else if( (orig != null)
+                && (orig.getBackupToolIgnoreFlags() != null))
+        {
+            this.m_backupToolIgnoreFlags = orig.getBackupToolIgnoreFlags();
         }
         else
         {
@@ -895,92 +1126,142 @@ public final class BackupConfig
 
         if( jobFileNamePattern != null )
         {
-            this.jobFileNamePattern = jobFileNamePattern;
+            this.m_jobFileNamePattern = jobFileNamePattern;
+        }
+        else if( (orig != null)
+                && (orig.getJobFileNamePattern() != null))
+        {
+            this.m_jobFileNamePattern = orig.getJobFileNamePattern();
         }
         else
         {
-            this.jobFileNamePattern = null;
+            this.m_jobFileNamePattern = null;
         }
 
         if( jobFileNameComponent != null )
         {
-            this.jobFileNameComponent = jobFileNameComponent;
+            this.m_jobFileNameComponent = jobFileNameComponent;
+        }
+        else if( (orig != null)
+                && (orig.getArchiveFileNameComponent() != null))
+        {
+            this.m_jobFileNameComponent = orig.getJobFileNameComponent();
         }
         else
         {
-            this.jobFileNameComponent = new ArrayList<>();
+            this.m_jobFileNameComponent = new ArrayList<>();
         }
 
         if( jobFileNameTemplate != null )
         {
-            this.jobFileNameTemplate = jobFileNameTemplate;
+            this.m_jobFileNameTemplate = jobFileNameTemplate;
+        }
+        else if( (orig != null)
+                && (orig.getJobFileNameTemplate() != null))
+        {
+            this.m_jobFileNameTemplate = orig.getJobFileNameTemplate();
         }
         else
         {
-            this.jobFileNameTemplate = null;
+            this.m_jobFileNameTemplate = null;
         }
 
         if( usageConfig != null )
         {
-            this.usageConfig = usageConfig;
+            this.m_usageConfig = usageConfig;
+        }
+        else if( (orig != null)
+                && (orig.getUsageConfig() != null))
+        {
+            this.m_usageConfig = orig.getUsageConfig();
         }
         else
         {
-            this.usageConfig = null;
+            this.m_usageConfig = null;
         }
 
         if( dirList != null )
         {
-            this.dirList = dirList;
+            this.m_dirList = dirList;
+        }
+        else if( (orig != null)
+                && (orig.getDirList() != null))
+        {
+            this.m_dirList = orig.getDirList();
         }
         else
         {
-            this.dirList = null;
+            this.m_dirList = null;
         }
 
         if( fileList != null )
         {
-            this.fileList = fileList;
+            this.m_fileList = fileList;
+        }
+        else if( (orig != null)
+                && (orig.getFileList() != null))
+        {
+            this.m_fileList = orig.getFileList();
         }
         else
         {
-            this.fileList = null;
+            this.m_fileList = null;
         }
 
         if( setType != null )
         {
-            this.setType = setType;
+            this.m_setType = setType;
+        }
+        else if( (orig != null)
+                && (orig.getSetType() != null))
+        {
+            this.m_setType = orig.getSetType();
         }
         else
         {
-            this.setType = null;
+            this.m_setType = null;
         }
 
         if( encryption != null )
         {
-            this.encryption = encryption;
+            this.m_encryption = encryption;
+        }
+        else if( (orig != null)
+                && (orig.getEncryption() != null))
+        {
+            this.m_encryption = orig.getEncryption();
         }
         else
         {
-            this.encryption = null;
+            this.m_encryption = null;
         }
 
         if( chunk != null )
         {
-            this.chunk = chunk;
+            this.m_chunk = chunk;
+        }
+        else if( (orig != null)
+                && (orig.getChunk() != null))
+        {
+            this.m_chunk = orig.getChunk();
         }
         else
         {
-            this.chunk = null;
+            this.m_chunk = null;
         }
 
         if( storageBackend != null )
         {
-            this.storageBackend = storageBackend;
+            this.m_storageBackend = storageBackend;
+        }
+        else if( (orig != null)
+                && (orig.getStorageBackend() != null))
+        {
+            this.m_storageBackend = orig.getStorageBackend();
         }
         else
         {
-            this.storageBackend = null;
+            this.m_storageBackend = null;
         }
     }
 
@@ -1008,42 +1289,42 @@ public final class BackupConfig
         StringBuilder sb = new StringBuilder();
 
         sb.append(String.format("%sBACKUPCONFIG\n", indentStr));
-        sb.append(String.format("%s  SET NAME           : '%s'\n", indentStr, setName));
-        sb.append(String.format("%s  SET TYPE           : '%s'\n", indentStr, setType));
-        sb.append(String.format("%s  STATE FILE NAME    : '%s'\n", indentStr, stateFileName));
-        sb.append(String.format("%s  HOLDING FOLDER     : '%s'\n", indentStr, holdingDirectory));
-        sb.append(String.format("%s  ID                 : '%s'\n", indentStr, backupId));
-        sb.append(String.format("%s  USE CHECKSUM       : '%b'\n", indentStr, useChecksum));
-        sb.append(String.format("%s  CHECKSUM TYPE      : '%s'\n", indentStr, checksumType));
-        sb.append(String.format("%s  USE MODIFIED DATE  : '%s'\n", indentStr, useModifiedDate));
-        sb.append(String.format("%s  COMPRESSION        : '%s'\n", indentStr, compression));
-        sb.append(String.format("%s  CHUNK              :\n%s", indentStr, chunk!=null?chunk.toString(indent + 2):null));
-        sb.append(String.format("%s  REPORT TYPE        : '%s'\n", indentStr, backupReportType));
-        sb.append(String.format("%s  REPORT PATH        : '%s'\n", indentStr, backupReportPath));
-        sb.append(String.format("%s  RESTORE            : '%b'\n", indentStr, restore));
-        sb.append(String.format("%s  BACKUP             : '%b'\n", indentStr, backup));
-        sb.append(String.format("%s  PRESERVE PERMS     : '%b'\n", indentStr, preservePermissions));
-        sb.append(String.format("%s  PRESERVE OWNERSHIP : '%b'\n", indentStr, preserveOwnership));
-        sb.append(String.format("%s  NO CLOBBER         : '%b'\n", indentStr, noClobber));
-        sb.append(String.format("%s  DESCRIBE           : '%b'\n", indentStr, backupDescribe));
-        sb.append(String.format("%s  STATUS             : '%b'\n", indentStr, backupStatus));
-        sb.append(String.format("%s  RESTORE DESTINATION: '%s'\n", indentStr, restoreDestination));
-        sb.append(String.format("%s  BACKEND STORAGE    :\n%s", indentStr, storageBackend!=null?storageBackend.toString(indent + 2):null));
-        sb.append(String.format("%s  ENCRYPTION TYPE    : '%s'\n", indentStr, encryption));
+        sb.append(String.format("%s  SET NAME           : '%s'\n", indentStr, m_setName));
+        sb.append(String.format("%s  SET TYPE           : '%s'\n", indentStr, m_setType));
+        sb.append(String.format("%s  STATE FILE NAME    : '%s'\n", indentStr, m_stateFileName));
+        sb.append(String.format("%s  HOLDING FOLDER     : '%s'\n", indentStr, m_holdingDirectory));
+        sb.append(String.format("%s  ID                 : '%s'\n", indentStr, m_backupId));
+        sb.append(String.format("%s  USE CHECKSUM       : '%b'\n", indentStr, m_useChecksum));
+        sb.append(String.format("%s  CHECKSUM TYPE      : '%s'\n", indentStr, m_checksumType));
+        sb.append(String.format("%s  USE MODIFIED DATE  : '%s'\n", indentStr, m_useModifiedDate));
+        sb.append(String.format("%s  COMPRESSION        : '%s'\n", indentStr, m_compression));
+        sb.append(String.format("%s  CHUNK              :\n%s", indentStr, m_chunk !=null? m_chunk.toString(indent + 2):null));
+        sb.append(String.format("%s  REPORT TYPE        : '%s'\n", indentStr, m_backupReportType));
+        sb.append(String.format("%s  REPORT PATH        : '%s'\n", indentStr, m_backupReportPath));
+        sb.append(String.format("%s  RESTORE            : '%b'\n", indentStr, m_restore));
+        sb.append(String.format("%s  BACKUP             : '%b'\n", indentStr, m_backup));
+        sb.append(String.format("%s  PRESERVE PERMS     : '%b'\n", indentStr, m_preservePermissions));
+        sb.append(String.format("%s  PRESERVE OWNERSHIP : '%b'\n", indentStr, m_preserveOwnership));
+        sb.append(String.format("%s  NO CLOBBER         : '%b'\n", indentStr, m_noClobber));
+        sb.append(String.format("%s  DESCRIBE           : '%b'\n", indentStr, m_backupDescribe));
+        sb.append(String.format("%s  STATUS             : '%b'\n", indentStr, m_backupStatus));
+        sb.append(String.format("%s  RESTORE DESTINATION: '%s'\n", indentStr, m_restoreDestination));
+        sb.append(String.format("%s  BACKEND STORAGE    :\n%s", indentStr, m_storageBackend !=null? m_storageBackend.toString(indent + 2):null));
+        sb.append(String.format("%s  ENCRYPTION TYPE    : '%s'\n", indentStr, m_encryption));
 
         sb.append(String.format("%s  FOLDER LIST        :\n", indentStr));
-        if( dirList != null )
+        if( m_dirList != null )
         {
-            for( BackupConfigDirectory fl : dirList )
+            for( BackupConfigDirectory fl : m_dirList)
             {
                 sb.append(fl.toString(indent + 2));
             }
         }
 
         sb.append(String.format("%s  FILE LIST          :\n", indentStr));
-        if( fileList != null )
+        if( m_fileList != null )
         {
-            for( BackupConfigFile fl : fileList )
+            for( BackupConfigFile fl : m_fileList)
             {
                 sb.append(fl.toString(indent + 2));
             }
@@ -1074,6 +1355,7 @@ public final class BackupConfig
     }
 
     public static BackupConfig from(
+            final BackupConfig orig,
             final String setName,
             final Integer priority,
             final Boolean useChecksum,
@@ -1120,6 +1402,7 @@ public final class BackupConfig
             final UsageConfig usageConfig) throws BackupToolException
     {
         BackupConfig res = new BackupConfig(
+                orig,
                 setName,
                 priority,
                 useChecksum,
@@ -1218,7 +1501,7 @@ public final class BackupConfig
             final BackupConfigStorageBackend storageBackend,
             final UsageConfig usageConfig) throws BackupToolException
     {
-        log.debug("Creating Backup Configuration.\n");
+        LOGGER.debug("Creating Backup Configuration.\n");
 
         BackupConfig conf;
 
@@ -1227,15 +1510,8 @@ public final class BackupConfig
             String currSetName = null;
             if( StringUtils.isBlank(setName) )
             {
-                if( orig != null && StringUtils.isNoneBlank(orig.getSetName()) )
-                {
-                    currSetName = orig.getSetName();
-                }
-                else
-                {
-                    // Default or error
-                    log.debug("Missing BackupConfig SetName.");
-                }
+                // Default or error
+                LOGGER.debug("Missing BackupConfig SetName.");
             }
             else
             {
@@ -1245,15 +1521,8 @@ public final class BackupConfig
             List<BackupConfigDirectory> currBackupDirectory = null;
             if( dirList == null || dirList.isEmpty() )
             {
-                if( orig != null && orig.getDirList() != null && !orig.getDirList().isEmpty() )
-                {
-                    currBackupDirectory = orig.getDirList();
-                }
-                else
-                {
-                    // Default or error
-                    log.debug("Missing BackupConfig Directory List.");
-                }
+                // Default or error
+                LOGGER.debug("Missing BackupConfig Directory List.");
             }
             else
             {
@@ -1263,15 +1532,7 @@ public final class BackupConfig
             List<BackupConfigFile> currBackupFiles = null;
             if( fileList == null || fileList.isEmpty() )
             {
-                if( orig != null && orig.getFileList() != null && !orig.getFileList().isEmpty() )
-                {
-                    currBackupFiles = orig.getFileList();
-                }
-                else
-                {
-                    // Default or error
-                    log.debug("Missing BackupConfig File List.");
-                }
+                LOGGER.debug("Missing BackupConfig File List.");
             }
             else
             {
@@ -1281,15 +1542,8 @@ public final class BackupConfig
             Integer currPriority = null;
             if( StringUtils.isBlank(priority) )
             {
-                if( orig != null && orig.getPriority() != null )
-                {
-                    currPriority = orig.getPriority();
-                }
-                else
-                {
-                    // Default or error
-                    log.debug("Missing BackupConfig Priority.");
-                }
+                // Default or error
+                LOGGER.debug("Missing BackupConfig Priority.");
             }
             else
             {
@@ -1299,15 +1553,8 @@ public final class BackupConfig
             Path currHoldingDir = null;
             if( StringUtils.isBlank(holdingDir) )
             {
-                if( orig != null && orig.getHoldingDirectory() != null )
-                {
-                    currHoldingDir = orig.getHoldingDirectory();
-                }
-                else
-                {
-                    // Default or error
-                    log.debug("Missing BackupConfig Holding Directory.");
-                }
+                // Default or error
+                LOGGER.debug("Missing BackupConfig Holding Directory.");
             }
             else
             {
@@ -1317,15 +1564,8 @@ public final class BackupConfig
             Path currReportPath = null;
             if( StringUtils.isBlank(backupReportPath) )
             {
-                if( orig != null && orig.getBackupReportPath() != null )
-                {
-                    currReportPath = orig.getBackupReportPath();
-                }
-                else
-                {
-                    // Default or error
-                    log.debug("Missing BackupConfig Report Path.");
-                }
+                // Default or error
+                LOGGER.debug("Missing BackupConfig Report Path.");
             }
             else
             {
@@ -1335,15 +1575,8 @@ public final class BackupConfig
             Path currRestoreDestPath = null;
             if( restoreDestination == null )
             {
-                if( orig != null && orig.getRestoreDestination() != null )
-                {
-                    currRestoreDestPath = orig.getRestoreDestination();
-                }
-                else
-                {
-                    // Default or error
-                    log.debug("Missing BackupConfig Restore Destination Path.");
-                }
+                // Default or error
+                LOGGER.debug("Missing BackupConfig Restore Destination Path.");
             }
             else
             {
@@ -1353,15 +1586,8 @@ public final class BackupConfig
             Path currOutputFilePath = null;
             if( StringUtils.isBlank(outputFile) )
             {
-                if( orig != null && orig.getOutputFile() != null )
-                {
-                    currOutputFilePath = orig.getOutputFile();
-                }
-                else
-                {
-                    // Default or error
-                    log.debug("Missing BackupConfig Output File Path.");
-                }
+                // Default or error
+                LOGGER.debug("Missing BackupConfig Output File Path.");
             }
             else
             {
@@ -1371,15 +1597,8 @@ public final class BackupConfig
             Path currLockFilePath = null;
             if( StringUtils.isBlank(lockFilePath) )
             {
-                if( orig != null && orig.getLockFilePath() != null )
-                {
-                    currLockFilePath = orig.getLockFilePath();
-                }
-                else
-                {
-                    // Default or error
-                    log.debug("Missing BackupConfig Lock File Path.");
-                }
+                // Default or error
+                LOGGER.debug("Missing BackupConfig Lock File Path.");
             }
             else
             {
@@ -1389,15 +1608,8 @@ public final class BackupConfig
             Path currStateFilename = null;
             if( StringUtils.isBlank(stateFilename) )
             {
-                if( orig != null && orig.getStateFileName() != null )
-                {
-                    currStateFilename = orig.getStateFileName();
-                }
-                else
-                {
-                    // Default or error
-                    log.debug("Missing BackupConfig State Filename.");
-                }
+                // Default or error
+                LOGGER.debug("Missing BackupConfig State Filename.");
             }
             else
             {
@@ -1407,15 +1619,8 @@ public final class BackupConfig
             Path currErrorFilename = null;
             if( StringUtils.isBlank(errorFilename) )
             {
-                if( orig != null && orig.getErrorFileName() != null )
-                {
-                    currErrorFilename = orig.getErrorFileName();
-                }
-                else
-                {
-                    // Default or error
-                    log.debug("Missing BackupConfig Error Filename.");
-                }
+                // Default or error
+                LOGGER.debug("Missing BackupConfig Error Filename.");
             }
             else
             {
@@ -1425,15 +1630,8 @@ public final class BackupConfig
             Pattern currArchiveNamePattern = null;
             if( StringUtils.isBlank(archiveNamePattern) )
             {
-                if( orig != null && orig.getArchiveFileNamePattern() != null )
-                {
-                    currArchiveNamePattern = orig.getArchiveFileNamePattern();
-                }
-                else
-                {
-                    // Default or error
-                    log.debug("Missing Name Pattern.");
-                }
+                // Default or error
+                LOGGER.debug("Missing Name Pattern.");
             }
             else
             {
@@ -1443,15 +1641,8 @@ public final class BackupConfig
             List<BackupToolNameComponentType> currArchiveNameComp = null;
             if( StringUtils.isBlank(archiveNameComp) )
             {
-                if( orig != null && orig.getArchiveFileNameComponent() != null )
-                {
-                    currArchiveNameComp = orig.getArchiveFileNameComponent();
-                }
-                else
-                {
-                    // Default or error
-                    log.debug("Missing Name Pattern Component.");
-                }
+                // Default or error
+                LOGGER.debug("Missing Name Pattern Component.");
             }
             else
             {
@@ -1461,15 +1652,8 @@ public final class BackupConfig
             Path currArchiveNameTemplate = null;
             if( StringUtils.isBlank(archiveNameTemplate) )
             {
-                if( orig != null && orig.getArchiveFileNameTemplate() != null )
-                {
-                    currArchiveNameTemplate = orig.getArchiveFileNameTemplate();
-                }
-                else
-                {
-                    // Default or error
-                    log.debug("Missing Name Template.");
-                }
+                // Default or error
+                LOGGER.debug("Missing Name Template.");
             }
             else
             {
@@ -1479,15 +1663,8 @@ public final class BackupConfig
             Pattern currJobNamePattern = null;
             if( StringUtils.isBlank(jobNamePattern) )
             {
-                if( orig != null && orig.getJobFileNamePattern() != null )
-                {
-                    currJobNamePattern = orig.getJobFileNamePattern();
-                }
-                else
-                {
-                    // Default or error
-                    log.debug("Missing Job Name Pattern.");
-                }
+                // Default or error
+                LOGGER.debug("Missing Job Name Pattern.");
             }
             else
             {
@@ -1497,15 +1674,8 @@ public final class BackupConfig
             List<BackupToolNameComponentType> currJobNameComp = null;
             if( StringUtils.isBlank(jobNameComp) )
             {
-                if( orig != null && orig.getJobFileNameComponent() != null )
-                {
-                    currJobNameComp = orig.getJobFileNameComponent();
-                }
-                else
-                {
-                    // Default or error
-                    log.debug("Missing Job Name Pattern Component.");
-                }
+                // Default or error
+                LOGGER.debug("Missing Job Name Pattern Component.");
             }
             else
             {
@@ -1515,15 +1685,8 @@ public final class BackupConfig
             Set<BackupToolIgnoreFlags> currIgnoreFlags = null;
             if( ignoreFlags == null || ignoreFlags.isEmpty() )
             {
-                if( orig != null && orig.getFileList() != null && !orig.getIgnoreFlags().isEmpty() )
-                {
-                    currIgnoreFlags = orig.getIgnoreFlags();
-                }
-                else
-                {
-                    // Default or error
-                    log.debug("Missing BackupConfig Ignore flags.");
-                }
+                // Default or error
+                LOGGER.debug("Missing BackupConfig Ignore flags.");
             }
             else
             {
@@ -1533,15 +1696,8 @@ public final class BackupConfig
             Path currJobNameTemplate =  null;
             if( StringUtils.isBlank(jobNameTemplate) )
             {
-                if( orig != null && orig.getJobFileNameTemplate() != null )
-                {
-                    currJobNameTemplate = orig.getJobFileNameTemplate();
-                }
-                else
-                {
-                    // Default or error
-                    log.debug("Missing Job Template.");
-                }
+                // Default or error
+                LOGGER.debug("Missing Job Template.");
             }
             else
             {
@@ -1551,15 +1707,8 @@ public final class BackupConfig
             FSSReportType currReportType = null;
             if( StringUtils.isBlank(backupReportType) )
             {
-                if( orig != null && orig.getBackupReportType() != null )
-                {
-                    currReportType = orig.getBackupReportType();
-                }
-                else
-                {
-                    // Default or error
-                    log.debug("Missing BackupConfig Report Type.");
-                }
+                // Default or error
+                LOGGER.debug("Missing BackupConfig Report Type.");
             }
             else
             {
@@ -1569,15 +1718,8 @@ public final class BackupConfig
             BackupId currBackupId = null;
             if( StringUtils.isBlank(backupId) )
             {
-                if( orig != null && orig.getBackupId() != null )
-                {
-                    currBackupId = orig.getBackupId();
-                }
-                else
-                {
-                    // Default or error
-                    log.debug("Missing BackupConfig Backup ID.");
-                }
+                // Default or error
+                LOGGER.debug("Missing BackupConfig Backup ID.");
             }
             else
             {
@@ -1587,15 +1729,8 @@ public final class BackupConfig
             FSSBackupType currBackupType = null;
             if( StringUtils.isBlank(setType) )
             {
-                if( orig != null && orig.getSetType() != null )
-                {
-                    currBackupType = orig.getSetType();
-                }
-                else
-                {
-                    // Default or error
-                    log.debug("Missing BackupConfig Backup Type");
-                }
+                // Default or error
+                LOGGER.debug("Missing BackupConfig Backup Type");
             }
             else
             {
@@ -1605,15 +1740,8 @@ public final class BackupConfig
             FSSBackupHashType currChecksumType = null;
             if( StringUtils.isBlank(checksumType) )
             {
-                if( orig != null && orig.getChecksumType() != null )
-                {
-                    currChecksumType = orig.getChecksumType();
-                }
-                else
-                {
-                    // Default or error
-                    log.debug("Missing BackupConfig Checksum Type.");
-                }
+                // Default or error
+                LOGGER.debug("Missing BackupConfig Checksum Type.");
             }
             else
             {
@@ -1623,15 +1751,8 @@ public final class BackupConfig
             BackupConfigCompression currCompression = null;
             if( StringUtils.isBlank(compression) )
             {
-                if( orig != null && orig.getCompression() != null )
-                {
-                    currCompression = orig.getCompression();
-                }
-                else
-                {
-                    // Default or error
-                    log.debug("Missing BackupConfig Compression.");
-                }
+                // Default or error
+                LOGGER.debug("Missing BackupConfig Compression.");
             }
             else
             {
@@ -1665,15 +1786,8 @@ public final class BackupConfig
             }
             else
             {
-                if( orig != null && orig.getEncryption() != null )
-                {
-                    currEncryption = orig.getEncryption();
-                }
-                else
-                {
-                    // Default or error
-                    log.debug("Missing BackupConfig Encryption.");
-                }
+                // Default or error
+                LOGGER.debug("Missing BackupConfig Encryption.");
             }
 
             BackupConfigChunk currChunk = null;
@@ -1686,15 +1800,8 @@ public final class BackupConfig
 
             if( StringUtils.isBlank(chunkSize) )
             {
-                if( orig != null && orig.getChunk() != null )
-                {
-                    currChunk = orig.getChunk();
-                }
-                else
-                {
-                    // Default or error
-                    log.debug("Missing BackupConfig Chunk.");
-                }
+                // Default or error
+                LOGGER.debug("Missing BackupConfig Chunk.");
             }
             else
             {
@@ -1705,15 +1812,8 @@ public final class BackupConfig
 
             if( StringUtils.isBlank(verbosity) )
             {
-                if( orig != null && orig.getVerbosity() != null )
-                {
-                    currVerb = orig.getVerbosity();
-                }
-                else
-                {
-                    // Default or error
-                    log.debug("Missing BackupConfig Verbosity.");
-                }
+                // Default or error
+                LOGGER.debug("Missing BackupConfig Verbosity.");
             }
             else
             {
@@ -1723,15 +1823,8 @@ public final class BackupConfig
             BackupConfigStorageBackend currStoreBackend = null;
             if( storageBackend == null )
             {
-                if( orig != null && orig.getStorageBackend() != null )
-                {
-                    currStoreBackend = orig.getStorageBackend();
-                }
-                else
-                {
-                    // Default or error
-                    log.debug("Missing BackupConfig Storage Backend.");
-                }
+                // Default or error
+                LOGGER.debug("Missing BackupConfig Storage Backend.");
             }
             else
             {
@@ -1739,6 +1832,7 @@ public final class BackupConfig
             }
 
             conf = from(
+                    orig,
                     currSetName,
                     currPriority,
                     useChecksum,
@@ -1789,7 +1883,7 @@ public final class BackupConfig
         {
             String errMsg = "Error creating new configuration object.";
 
-            log.debug(errMsg, ex);
+            LOGGER.debug(errMsg, ex);
             throw new BackupToolException(errMsg, ex);
         }
 
@@ -1817,9 +1911,9 @@ public final class BackupConfig
             case ERROR:
             {
                 String errMsg = String.format(
-                        "Error validating the backup configuration : %s\n", valRes);
+                        "Error validating the m_backup configuration : %s\n", valRes);
 
-                log.debug(errMsg);
+                LOGGER.debug(errMsg);
 
                // throw new BackupToolException(errMsg);
             }
