@@ -30,21 +30,17 @@ import com.fastsitesoft.backuptool.config.entities.UsageConfig;
 import com.fastsitesoft.backuptool.config.validators.BackupConfigValidator;
 import com.fastsitesoft.backuptool.enums.BackupToolIgnoreFlags;
 import com.fastsitesoft.backuptool.enums.BackupToolNameComponentType;
-import com.fastsitesoft.backuptool.enums.BackupToolResultStatus;
 import com.fastsitesoft.backuptool.enums.FSSBackupHashType;
 import com.fastsitesoft.backuptool.enums.FSSBackupType;
 import com.fastsitesoft.backuptool.enums.FSSReportType;
 import com.fastsitesoft.backuptool.enums.FSSVerbosity;
 import com.fastsitesoft.backuptool.utils.BackupToolException;
-import com.fastsitesoft.backuptool.utils.BackupToolResult;
-import com.fastsitesoft.backuptool.utils.FSSValidateConfigResult;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
@@ -95,61 +91,85 @@ public final class BackupConfigBuilder
     private BackupConfigEncryption m_encryption;
 
     /**
-     * Application logging verbosity.
+     * Application logging m_verbosity.
      */
-    private FSSVerbosity verbosity;
+    private FSSVerbosity m_verbosity;
 
 
     /**
      * File for redirecting StdOut and StdErr
      */
-    private Path outputFile;
+    private Path m_outputFile;
 
     /**
      * Do not change anything on the server, just simulate.
      */
-    private Boolean dryRun;
+    private Boolean m_dryRun;
 
     /**
      * Ignore existing lock file
      */
-    private Boolean ignoreLock;
+    private Boolean m_ignoreLock;
 
     /**
      * If set to true, the component may send out status emails
      */
-    private Boolean emailOnCompletion;
+    private Boolean m_emailOnCompletion;
 
     /**
      * List of contacts to be emailed if needed.
      */
-    private List<String> emailContacts;
+    private List<String> m_emailContacts;
 
     /**
-     * The process priority of the agent
+     * The process m_priority of the agent
      */
-    private Integer priority;
+    private Integer m_priority;
 
     /**
      * Lock file for allowing single program access.
      */
-    private Path lockFilePath;
+    private Path m_lockFilePath;
 
     /**
      * If true run the process as a background service instead of an interactive
      * process.
      */
-    private Boolean runAsService;
+    private Boolean m_runAsService;
 
     /**
      * Display the version of the application then exit.
      */
-    private Boolean displayVersion;
+    private Boolean m_displayVersion;
 
     /**
      * Display the usage options for the application the exit.
      */
-    private Boolean displayUsage;
+    private Boolean m_displayUsage;
+
+    private String m_encryptionCipher;
+
+    private String m_encryptionKey;
+
+    public String getEncryptionCipher()
+    {
+        return m_encryptionCipher;
+    }
+
+    public void setEncryptionCipher(final String encryptionCipher)
+    {
+        m_encryptionCipher = encryptionCipher;
+    }
+
+    public String getEncryptionKey()
+    {
+        return m_encryptionKey;
+    }
+
+    public void setEncryptionKey(final String encryptionKey)
+    {
+        m_encryptionKey = encryptionKey;
+    }
 
     public Integer getId()
     {
@@ -190,19 +210,39 @@ public final class BackupConfigBuilder
         return usageConfig;
     }
 
+    public void setUsageConfig(final UsageConfig usageConfig)
+    {
+        this.usageConfig = usageConfig;
+    }
+
     public Path getLockFilePath()
     {
-        return lockFilePath;
+        return m_lockFilePath;
+    }
+
+    public void setLockFilePath(final Path lockFilePath)
+    {
+        m_lockFilePath = lockFilePath;
     }
 
     public Integer getPriority()
     {
-        return priority;
+        return m_priority;
+    }
+
+    public void setPriority(final Integer priority)
+    {
+        m_priority = priority;
     }
 
     public Boolean isEmailOnCompletion()
     {
-        return emailOnCompletion;
+        return m_emailOnCompletion;
+    }
+
+    public void setEmailOnCompletion(final Boolean emailOnCompletion)
+    {
+        m_emailOnCompletion = emailOnCompletion;
     }
 
     public Boolean isPreserveOwnership()
@@ -210,9 +250,19 @@ public final class BackupConfigBuilder
         return m_preserveOwnership;
     }
 
+    public void setPreserveOwnership(final Boolean preserveOwnership)
+    {
+        m_preserveOwnership = preserveOwnership;
+    }
+
     public Boolean isPreservePermissions()
     {
         return m_preservePermissions;
+    }
+
+    public void setPreservePermissions(final Boolean preservePermissions)
+    {
+        m_preservePermissions = preservePermissions;
     }
 
     public Boolean isBackupDescribe()
@@ -220,9 +270,19 @@ public final class BackupConfigBuilder
         return m_backupDescribe;
     }
 
+    public void setBackupDescribe(final Boolean backupDescribe)
+    {
+        m_backupDescribe = backupDescribe;
+    }
+
     public Boolean isBackupStatus()
     {
         return m_backupStatus;
+    }
+
+    public void setBackupStatus(final Boolean backupStatus)
+    {
+        m_backupStatus = backupStatus;
     }
 
     /**
@@ -231,37 +291,79 @@ public final class BackupConfigBuilder
      */
     public Boolean isDryRun()
     {
-        return dryRun;
+        return m_dryRun;
+    }
+
+    public void setDryRun(Boolean dryRun)
+    {
+        m_dryRun = dryRun;
     }
 
     public Boolean isIgnoreLock()
     {
-        return ignoreLock==null?false:ignoreLock;
+        return m_ignoreLock ==null?false: m_ignoreLock;
+    }
+
+    public void setIgnoreLock(final Boolean ignoreLock)
+    {
+        m_ignoreLock = ignoreLock;
     }
 
     public FSSVerbosity getVerbosity()
     {
-        return verbosity;
+        return m_verbosity;
+    }
+
+    public void setVerbosity(FSSVerbosity verbosity)
+    {
+        m_verbosity = verbosity;
+    }
+
+    public void setVerbosity(String verbosityStr)
+    {
+        FSSVerbosity verbosity = FSSVerbosity.from(verbosityStr);
+
+        m_verbosity = verbosity;
     }
 
     public Boolean isRunAsService()
     {
-        return runAsService;
+        return m_runAsService;
+    }
+
+    public void setRunAsService(Boolean runAsService)
+    {
+        m_runAsService = runAsService;
     }
 
     public Boolean isDisplayVersion()
     {
-        return displayVersion==null?false:displayVersion;
+        return m_displayVersion ==null?false: m_displayVersion;
+    }
+
+    public void setDisplayVersion(Boolean displayVersion)
+    {
+        m_displayVersion = displayVersion;
     }
 
     public Boolean isDisplayUsage()
     {
-        return displayUsage==null?false:displayUsage;
+        return m_displayUsage ==null?false: m_displayUsage;
+    }
+
+    public void setDisplayUsage(final Boolean displayUsage)
+    {
+        m_displayUsage = displayUsage;
     }
 
     public Boolean isNoClobber()
     {
         return m_noClobber;
+    }
+
+    public void setNoClobber(final Boolean noClobber)
+    {
+        m_noClobber = noClobber;
     }
 
     public Pattern getArchiveFileNamePattern()
@@ -274,9 +376,34 @@ public final class BackupConfigBuilder
         return m_archiveFileNameComponent;
     }
 
+    public void setArchiveFileNameComponent(
+            final List<BackupToolNameComponentType> archiveFileNameComponent)
+    {
+        m_archiveFileNameComponent = archiveFileNameComponent;
+    }
+
+    public void setArchiveFileNameComponent(
+            final String archiveFileNameComponent) throws BackupToolException
+    {
+        m_archiveFileNameComponent
+                = BackupConfigValidator.normalizeArchiveNameComp(archiveFileNameComponent);
+    }
+
     public Path getArchiveFileNameTemplate()
     {
         return m_archiveFileNameTemplate;
+    }
+
+    public void setArchiveFileNameTemplate(final Path archiveFileNameTemplate)
+    {
+        m_archiveFileNameTemplate = archiveFileNameTemplate;
+    }
+
+    public void setArchiveFileNameTemplate(final String archiveFileNameTemplateStr)
+    {
+        Path archiveFileNameTemplate = Paths.get(archiveFileNameTemplateStr);
+
+        m_archiveFileNameTemplate = archiveFileNameTemplate;
     }
 
     public Pattern getJobFileNamePattern()
@@ -284,9 +411,45 @@ public final class BackupConfigBuilder
         return m_jobFileNamePattern;
     }
 
+    public void setJobFileNamePattern(final Pattern jobFileNamePattern)
+    {
+        m_jobFileNamePattern = jobFileNamePattern;
+    }
+
+    public void setJobFileNamePattern(final String jobFileNamePatternStr) throws BackupToolException
+    {
+        Pattern jobFileNamePattern
+                = BackupConfigValidator.normalizeJobNamePattern(jobFileNamePatternStr);
+
+        m_jobFileNamePattern = jobFileNamePattern;
+    }
+
+    public void setArchiveFileNamePattern(final Pattern archiveFileNamePattern)
+    {
+        m_archiveFileNamePattern = archiveFileNamePattern;
+    }
+
+    public void setArchiveFileNamePattern(final String archiveFileNamePatternStr) throws BackupToolException
+    {
+        Pattern archiveFileNamePattern
+                = BackupConfigValidator.normalizeArchiveNamePattern(archiveFileNamePatternStr);
+
+        m_archiveFileNamePattern = archiveFileNamePattern;
+    }
+
     public Path getJobFileNameTemplate()
     {
         return m_jobFileNameTemplate;
+    }
+
+    public void setJobFileNameTemplate(final Path jobFileNameTemplate)
+    {
+        m_jobFileNameTemplate = jobFileNameTemplate;
+    }
+
+    public void setJobFileNameTemplate(final String jobFileNameTemplate) throws BackupToolException
+    {
+        m_jobFileNameTemplate = BackupConfigValidator.normalizeJobNameTemplate(jobFileNameTemplate);
     }
 
     public List<BackupToolNameComponentType> getJobFileNameComponent()
@@ -294,10 +457,32 @@ public final class BackupConfigBuilder
         return m_jobFileNameComponent;
     }
 
+    public void setJobFileNameComponent(
+            final List<BackupToolNameComponentType> jobFileNameComponent)
+    {
+        m_jobFileNameComponent = jobFileNameComponent;
+    }
+
+    public void setJobFileNameComponent(
+            final String jobFileNameComponentStr) throws BackupToolException
+    {
+        final List<BackupToolNameComponentType> jobFileNameComponent =
+                BackupConfigValidator.normalizeJobNameComp(jobFileNameComponentStr);
+
+        m_jobFileNameComponent = jobFileNameComponent;
+    }
+
     public Set<BackupToolIgnoreFlags> getIgnoreFlags()
     {
         return m_backupToolIgnoreFlags;
     }
+
+    public void setBackupToolIgnoreFlags(
+            final Set<BackupToolIgnoreFlags> backupToolIgnoreFlags)
+    {
+        m_backupToolIgnoreFlags = backupToolIgnoreFlags;
+    }
+
     /**
      * * An option for setting a file for standard out and standard error.
      * <p>
@@ -314,7 +499,17 @@ public final class BackupConfigBuilder
      */
     public Path getOutputFile()
     {
-        return outputFile;
+        return m_outputFile;
+    }
+
+    public void setOutputFile(Path outputFile)
+    {
+        m_outputFile = outputFile;
+    }
+
+    public void setOutputFile(String outputFileStr)
+    {
+        m_outputFile = Paths.get(outputFileStr);
     }
 
     /**
@@ -325,6 +520,18 @@ public final class BackupConfigBuilder
     public Path getHoldingDirectory()
     {
         return m_holdingDirectory;
+    }
+
+    public void setHoldingDirectory(final Path holdingDirectory)
+    {
+        m_holdingDirectory = holdingDirectory;
+    }
+
+    public void setHoldingDirectory(final String holdingDirectoryStr)
+    {
+        Path holdingDirectory = Paths.get(holdingDirectoryStr);
+
+        m_holdingDirectory = holdingDirectory;
     }
 
     /**
@@ -340,6 +547,18 @@ public final class BackupConfigBuilder
         return m_backupId;
     }
 
+    public void setBackupId(final BackupId backupId)
+    {
+        m_backupId = backupId;
+    }
+
+    public void setBackupId(final String backupIdStr)
+    {
+        BackupId id = BackupId.from(backupIdStr);
+
+        m_backupId = id;
+    }
+
     /**
      * Use file checksums during differential m_backup related operations. Default for
      * this flag is normally 'on'.  But if getUseModifiedDate() flag is on, then
@@ -352,6 +571,11 @@ public final class BackupConfigBuilder
         return m_useChecksum;
     }
 
+    public void setUseChecksum(final Boolean useChecksum)
+    {
+        m_useChecksum = useChecksum;
+    }
+
     /**
      * The type of checksum to be used.
      *
@@ -360,6 +584,16 @@ public final class BackupConfigBuilder
     public FSSBackupHashType getChecksumType()
     {
         return m_checksumType;
+    }
+
+    public void setChecksumType(final FSSBackupHashType checksumType)
+    {
+        m_checksumType = checksumType;
+    }
+
+    public void setChecksumType(final String checksumType) throws BackupToolException
+    {
+        m_checksumType = BackupConfigValidator.normalizeChecksum(checksumType);
     }
 
     /**
@@ -374,6 +608,11 @@ public final class BackupConfigBuilder
         return m_useModifiedDate;
     }
 
+    public void setUseModifiedDate(final Boolean useModifiedDate)
+    {
+        m_useModifiedDate = useModifiedDate;
+    }
+
     /**
      * Type of report to generate. Default 'PLAIN'. Also 'XML' an option
      *
@@ -384,6 +623,15 @@ public final class BackupConfigBuilder
         return m_backupReportType;
     }
 
+    public void setBackupReportType(final FSSReportType backupReportType)
+    {
+        m_backupReportType = backupReportType;
+    }
+
+    public void setBackupReportType(final String backupReportType) throws BackupToolException
+    {
+        m_backupReportType = BackupConfigValidator.normalizeReportType(backupReportType);
+    }
 
     /**
      * The location of the m_backup report.
@@ -393,6 +641,16 @@ public final class BackupConfigBuilder
     public Path getBackupReportPath()
     {
         return m_backupReportPath;
+    }
+
+    public void setBackupReportPath(final Path backupReportPath)
+    {
+        m_backupReportPath = backupReportPath;
+    }
+
+    public void setBackupReportPath(final String backupReportPath) throws BackupToolException
+    {
+        m_backupReportPath = BackupConfigValidator.normalizeReportPath(backupReportPath);
     }
 
     /**
@@ -405,6 +663,11 @@ public final class BackupConfigBuilder
         return m_restore ==null?false: m_restore;
     }
 
+    public void setRestore(final Boolean restore)
+    {
+        m_restore = restore;
+    }
+
     /**
      * Run the m_backup described in the config file.
      *
@@ -415,9 +678,19 @@ public final class BackupConfigBuilder
         return m_backup ==null?false: m_backup;
     }
 
+    public void setBackup(Boolean backup)
+    {
+        m_backup = backup;
+    }
+
     public List<String> getEmailContacts()
     {
-        return emailContacts;
+        return m_emailContacts;
+    }
+
+    public void setEmailContacts(final List<String> emailContacts)
+    {
+        m_emailContacts = emailContacts;
     }
 
     /**
@@ -430,6 +703,16 @@ public final class BackupConfigBuilder
         return m_restoreDestination;
     }
 
+    public void setRestoreDestination(final Path restoreDestination)
+    {
+        m_restoreDestination = restoreDestination;
+    }
+
+    public void setRestoreDestination(final String restoreDestination) throws BackupToolException
+    {
+        m_restoreDestination
+                = BackupConfigValidator.normalizeRestoreDestinationPath(restoreDestination);
+    }
 
     /**
      * The name of the current m_backup set.
@@ -441,12 +724,29 @@ public final class BackupConfigBuilder
         return m_setName;
     }
 
+    public void setSetName(final String setName)
+    {
+        m_setName = setName;
+    }
+
     /**
      * @return the m_setType
      */
     public FSSBackupType getSetType()
     {
         return m_setType;
+    }
+
+    public void setSetType(final FSSBackupType setType)
+    {
+        m_setType = setType;
+    }
+
+    public void setSetType(final String setTypeStr) throws BackupToolException
+    {
+        FSSBackupType t = FSSBackupType.from(setTypeStr);
+
+        m_setType = t;
     }
 
     /**
@@ -459,6 +759,11 @@ public final class BackupConfigBuilder
         return m_dirList;
     }
 
+    public void setDirList(final List<BackupConfigDirectory> dirList)
+    {
+        m_dirList = dirList;
+    }
+
     /**
      * The name of the file that will hold status information relating to a m_backup set.
      *
@@ -469,9 +774,19 @@ public final class BackupConfigBuilder
         return m_stateFileName;
     }
 
+    public void setStateFileName(final Path stateFileName)
+    {
+        m_stateFileName = stateFileName;
+    }
+
     public Path getErrorFileName()
     {
         return m_errorFileName;
+    }
+
+    public void setErrorFileName(final Path errorFileName)
+    {
+        m_errorFileName = errorFileName;
     }
 
     /**
@@ -484,6 +799,27 @@ public final class BackupConfigBuilder
         return m_compression;
     }
 
+    public void setCompression(final BackupConfigCompression compression)
+    {
+        m_compression = compression;
+    }
+
+    public void setCompression(final String compression) throws BackupToolException
+    {
+        BackupConfigCompression currCompression = null;
+        if( StringUtils.isBlank(compression) )
+        {
+            // Default or error
+            LOGGER.debug("Missing BackupConfig Compression.");
+        }
+        else
+        {
+            currCompression = BackupConfigValidator.normalizeCompression(compression);
+        }
+
+        m_compression = currCompression;
+    }
+
     /**
      * The m_chunk configuration used in the current m_backup set, if any.
      *
@@ -494,6 +830,34 @@ public final class BackupConfigBuilder
         return m_chunk;
     }
 
+    public void setChunk(final BackupConfigChunk chunk)
+    {
+        m_chunk = chunk;
+    }
+
+    public void setChunk(final String chunkStr, String sizeTypeStr) throws BackupToolException
+    {
+        BackupConfigChunk currChunk = null;
+
+        String currChunkSizeType = sizeTypeStr;
+        if( StringUtils.isBlank(sizeTypeStr) )
+        {
+            currChunkSizeType = "KB";
+        }
+
+        if( StringUtils.isBlank(chunkStr) )
+        {
+            // Default or error
+            LOGGER.debug("Missing BackupConfig Chunk.");
+        }
+        else
+        {
+            currChunk = BackupConfigValidator.normalizeChunk(true, chunkStr, currChunkSizeType);
+        }
+
+        m_chunk = currChunk;
+    }
+
     /**
      * List of individual files that will be backed up in the current set
      *
@@ -502,6 +866,11 @@ public final class BackupConfigBuilder
     public List<BackupConfigFile> getFileList()
     {
         return m_fileList;
+    }
+
+    public void setFileList(final List<BackupConfigFile> fileList)
+    {
+        m_fileList = fileList;
     }
 
     /**
@@ -518,6 +887,11 @@ public final class BackupConfigBuilder
         return m_storageBackend;
     }
 
+    public void setStorageBackend(final BackupConfigStorageBackend storageBackend)
+    {
+        m_storageBackend = storageBackend;
+    }
+
     /**
      * The type of m_encryption used on disk ( at rest ) for the current m_backup set.
      *
@@ -526,6 +900,11 @@ public final class BackupConfigBuilder
     public BackupConfigEncryption getEncryption()
     {
         return m_encryption;
+    }
+
+    public void setEncryption(final BackupConfigEncryption encryption)
+    {
+        m_encryption = encryption;
     }
 
     private BackupConfigBuilder( )

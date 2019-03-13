@@ -17,6 +17,8 @@
  */
 package com.fastsitesoft.backuptool.main;
 
+import com.fasterxml.jackson.databind.util.ArrayBuilders;
+import com.fastsitesoft.backuptool.config.builders.BackupConfigBuilder;
 import com.fastsitesoft.backuptool.config.parsers.BackupConfigParser;
 import com.fastsitesoft.backuptool.config.entities.BackupConfig;
 import com.fastsitesoft.backuptool.config.entities.BackupConfigDirectory;
@@ -25,6 +27,7 @@ import com.fastsitesoft.backuptool.config.entities.UsageConfig;
 import com.fastsitesoft.backuptool.config.parsers.ParserUtil;
 import com.fastsitesoft.backuptool.constants.BackupConstants;
 import com.fastsitesoft.backuptool.enums.BackupToolFileFormats;
+import com.fastsitesoft.backuptool.enums.BackupToolNameComponentType;
 import com.fastsitesoft.backuptool.utils.BackupToolException;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -78,50 +81,11 @@ public class BackupToolInitialize
         log.debug( String.format("Initialize() started. %s\n", Arrays.toString(args)) );
         
         CommandLineParser parser = new DefaultParser();
-        BackupConfig backupOpts = null;
-
-        String currVerbose = null;
-        String currOutputFile = null;
-        String currType = null;
-        String currSetName = null;
-        String currBackendURL = null;
-        String currBackupId = null;
-        String currBackupFlder = null;
-        String currChecksumType = null;
-        String currChunk = null;
-        String currChunkSize = null;
-        String currEncryptionCipher = null;
-        String currEncryptionKey = null;
-        String currCompressionType = null;
-        String currReportType = null;
-        String currReportPath = null;
-        String currRestoreDest = null;
-        String currArchiveNamePattern = null;
-        String currArchiveNameComp = null;
-        String currArchiveNameTemplate = null;
-        String currJobNamePattern = null;
-        String currJobNameComp = null;
-        String currJobNameTemplate = null;
-        List<BackupConfigDirectory> currBackupDirs = new ArrayList<>();
-        List<BackupConfigFile> currBackupFiles = new ArrayList<>();
-        Boolean currRunAsService = null;
-        Boolean currDisplayVersion = null;
-        Boolean currDisplayUsage = null;
-        Boolean currDryRun = null;
-        Boolean currRunBackup = null;
-        Boolean currRunRestore = null;
-        Boolean currUseChecksum = null;
-        Boolean useModifiedDate = null;
-        Boolean preservePermissions = null;
-        Boolean preserveOwnership = null;
-        Boolean noClobber = null;
-        Boolean currIgnoreLock = null;
-        Boolean backupDescribe = null;
-        Boolean status = null;
-        UsageConfig currUsageConf = null;
-
         Options options = ConfigureOptions();
-        
+
+        BackupConfig backupOpts = null;
+        BackupConfigBuilder backupOptsBuilder = BackupConfigBuilder.from();
+
         try
         {
             // Get the command line argument list from the OS
@@ -221,41 +185,41 @@ public class BackupToolInitialize
                 switch( currOptName )
                 {      
                     case "verbose":
-                        currVerbose = currOpt.getValue();
+                        backupOptsBuilder.setVerbosity(currOpt.getValue());
                         break;
                      
                     case "service":
-                        currRunAsService = true;
+                        backupOptsBuilder.setRunAsService(true);
                         break;
                         
                     case "version":
-                        currDisplayVersion = true;
+                        backupOptsBuilder.setDisplayVersion(true);
                         break;
                         
                     case "dry-run":
-                        currDryRun = true;
+                        backupOptsBuilder.setDryRun(true);
                         break;
                         
                     case "output-redirect":
-                        currOutputFile = currOpt.getValue();
+                        backupOptsBuilder.setOutputFile(currOpt.getValue());
                         break;
                         
                     case "run-backup":
                         // Run the Backup utility
-                        currRunBackup = true;
+                        backupOptsBuilder.setBackup(true);
                         break;
                         
                     case "run-restore":
                         // Run the Backup Restore utility
-                        currRunRestore = true;
+                        backupOptsBuilder.setRestore(true);
                         break;
                         
                     case "backup-type":
-                        currType = currOpt.getValue();
+                        backupOptsBuilder.setSetType(currOpt.getValue());
                         break;
                      
                     case "backup-setname":
-                        currSetName = currOpt.getValue();
+                        backupOptsBuilder.setSetName(currOpt.getValue());
                         break;
                         
                     case "backup-location-url":
@@ -263,12 +227,13 @@ public class BackupToolInitialize
                            // BackupConfigStorageBackend currBackend
                            //             = backupOpts.getStorageBackend();
                            // currBackend.setUrl(currOpt.getValue());
-                            currBackendURL = currOpt.getValue();
+
+                           /* currBackendURL = currOpt.getValue(); */
                         }
                         break;
                         
                     case "backup-id":
-                        currBackupId = currOpt.getValue();
+                        backupOptsBuilder.setBackupId(currOpt.getValue());
                         break;
                         
                     case "backup-folder":
@@ -276,12 +241,19 @@ public class BackupToolInitialize
                             BackupConfigDirectory dir = new BackupConfigDirectory(
                                     currOpt.getValue(), null, null, null, null, null, false);
 
+                            List<BackupConfigDirectory>  currBackupDirs = backupOptsBuilder.getDirList();
+                            if (currBackupDirs == null)
+                            {
+                                currBackupDirs = new ArrayList<>();
+                                backupOptsBuilder.setDirList(currBackupDirs);
+                            }
+
                             currBackupDirs.add(dir);
                         }
                         break;
-                       
+
                     case "backup-holding-folder":
-                        currBackupFlder = currOpt.getValue();
+                        backupOptsBuilder.setHoldingDirectory(currOpt.getValue());
                         break;
                         
                     case "backup-file":
@@ -289,44 +261,51 @@ public class BackupToolInitialize
                             BackupConfigFile file = new BackupConfigFile(
                                     currOpt.getValue(), null, null, null, false);
 
+                            List<BackupConfigFile>  currBackupFiles = backupOptsBuilder.getFileList();
+                            if (currBackupFiles == null)
+                            {
+                                currBackupFiles = new ArrayList<>();
+                                backupOptsBuilder.setFileList(currBackupFiles);
+                            }
+
                             currBackupFiles.add(file);
                         }
                         break;
 
                     case "archive-name-regex":
-                        currArchiveNamePattern = currOpt.getValue();
+                        backupOptsBuilder.setArchiveFileNamePattern(currOpt.getValue());
                         break;
 
                     case "archive-name-component":
-                        currArchiveNameComp = currOpt.getValue();
+                        backupOptsBuilder.setArchiveFileNameComponent(currOpt.getValue());
                         break;
 
                     case "archive-name-template":
-                        currArchiveNameTemplate = currOpt.getValue();
+                        backupOptsBuilder.setArchiveFileNameTemplate(currOpt.getValue());
                         break;
 
                     case "job-name-regex":
-                        currJobNamePattern = currOpt.getValue();
+                        backupOptsBuilder.setJobFileNamePattern(currOpt.getValue());
                         break;
 
                     case "job-name-component":
-                        currJobNameComp = currOpt.getValue();
+                        backupOptsBuilder.setJobFileNameComponent(currOpt.getValue());
                         break;
 
                     case "job-name-template":
-                        currJobNameTemplate = currOpt.getValue();
+                        backupOptsBuilder.setJobFileNameTemplate(currOpt.getValue());
                         break;
 
                     case "use-checksum":
-                        currUseChecksum = true;
+                        backupOptsBuilder.setUseChecksum(true);
                         break;
                         
                     case "checksum":
-                        currChecksumType = currOpt.getValue();
+                        backupOptsBuilder.setChecksumType(currOpt.getValue());
                         break;
                         
                     case "use-modified-date":
-                        useModifiedDate = true;
+                        backupOptsBuilder.setUseModifiedDate(true);
                         break;
                         
                     case "chunk-size":
@@ -340,8 +319,8 @@ public class BackupToolInitialize
                                 String tempChunk = currOpt.getValue();
                                 Pattern p = Pattern.compile("([0-9]+)([a-zA-Z]+)");
                                 Matcher m = p.matcher(tempChunk.trim());
-                                currChunk = m.group(1);
-                                currChunkSize = m.group(2);
+
+                                backupOptsBuilder.setChunk(m.group(1), m.group(2));
                             }
                             catch(Exception ex)
                             {
@@ -351,61 +330,61 @@ public class BackupToolInitialize
                         break;
                         
                     case "encryption-cipher":
-                        currEncryptionCipher = currOpt.getValue();
+                        backupOptsBuilder.setEncryptionCipher(currOpt.getValue());
                         break;
 
                     case "encryption-key":
-                        currEncryptionKey = currOpt.getValue();
+                        backupOptsBuilder.setEncryptionKey(currOpt.getValue());
                         break;
 
                     case "backup-compression-type":
-                        currCompressionType = currOpt.getValue();
+                        backupOptsBuilder.setCompression(currOpt.getValue());
                         break;
                         
                     case "backup-report-type":
-                        currReportType = currOpt.getValue();
+                        backupOptsBuilder.setBackupReportType(currOpt.getValue());
                         break;
                         
                     case "backup-report-path":
-                        currReportPath = currOpt.getValue();
+                        backupOptsBuilder.setBackupReportPath(currOpt.getValue());
                         break;
                         
                     case "restore-destination":
-                        currRestoreDest = currOpt.getValue();
-                        break;    
+                        backupOptsBuilder.setRestoreDestination(currOpt.getValue());
+                        break;
                         
                     case "no-preserve-permissions":
-                        preservePermissions = false;
+                        backupOptsBuilder.setPreservePermissions(false);
                         break;
                         
                     case "no-preserve-ownership":
-                        preserveOwnership = false;
+                        backupOptsBuilder.setPreserveOwnership(false);
                         break;
                         
                     case "no-clobber":
-                        noClobber = true;
+                        backupOptsBuilder.setNoClobber(true);
                         break;
 
                     case "ignore-lock":
-                        currIgnoreLock = true;
+                        backupOptsBuilder.setIgnoreLock(true);
                         break;
 
                     case "describe":
-                        backupDescribe = true;
+                        backupOptsBuilder.setBackupDescribe(true);
                         break;
                         
                     case "status":
-                        status = true;
+                        backupOptsBuilder.setBackupStatus(true);
                         break;
                 }
             }
 
             // Do some manual checking to the provided options
             // because CLI options groups are a bit of a pain.
-            if( BooleanUtils.isNotTrue(currRunRestore)
-                    && BooleanUtils.isNotTrue(currRunBackup)
-                    && BooleanUtils.isNotTrue(currDisplayVersion)
-                    && BooleanUtils.isNotTrue(currDisplayUsage) )
+            if( BooleanUtils.isNotTrue(backupOptsBuilder.getRestore())
+                    && BooleanUtils.isNotTrue(backupOptsBuilder.getBackup())
+                    && BooleanUtils.isNotTrue(backupOptsBuilder.isDisplayVersion())
+                    && BooleanUtils.isNotTrue(backupOptsBuilder.isDisplayUsage()) )
             {
                 // None of the core functions were selected
                 throw new BackupToolException("Expected a core function to be specified.  Please review your command line options. 'Backup'? 'Restore'? 'Usage'?");
@@ -413,55 +392,7 @@ public class BackupToolInitialize
 
             log.debug("Merging Command Line Arguments...");
 
-            backupOpts = BackupConfig.from(
-                    backupOpts,
-                    currSetName,
-                    null,  // Priority
-                    currUseChecksum, // useChecksum,
-                    useModifiedDate, // useModifiedDate,
-                    currRunRestore,// restore,
-                    currRunBackup, // backup,
-                    null, // emailOnCompletion
-                    currDryRun, // dryRun,
-                    currIgnoreLock, // ignore lock
-                    currRunAsService, // runAsService,
-                    currDisplayUsage, // displayUsage,
-                    currDisplayVersion, // displayVersion,
-                    preserveOwnership, // preserveOwnership,
-                    preservePermissions, // preservePermissions,
-                    noClobber, // noClobber,
-                    backupDescribe, // backupDescribe,
-                    status, // backupStatus,
-                    currBackupFlder, // holding Dir
-                    currReportPath, // backupReportPath,
-                    currRestoreDest, // restoreDestination,
-                    currOutputFile,  // outputFile,
-                    null, // currLockFileStr,
-                    null, // currStateFileStr,
-                    null, // currErrorFileStr,
-                    null, // emailContacts,
-                    currBackupDirs,
-                    currBackupFiles,
-                    currReportType,
-                    currBackupId, //backupId,
-                    currType,
-                    currChecksumType,
-                    currCompressionType,
-                    currEncryptionCipher,
-                    currEncryptionKey, // encryption key
-                    currChunk,
-                    currChunkSize,
-                    currArchiveNamePattern,
-                    currArchiveNameComp,
-                    currArchiveNameTemplate,
-                    currJobNamePattern,
-                    currJobNameTemplate,
-                    currJobNameComp,
-                    null,
-                    currVerbose, // verbosity,
-                    null, // currBackendURL, // Storage
-                    currUsageConf // usageConfig
-            );
+            backupOpts = backupOptsBuilder.toConfig(null);
         }
         catch (BackupToolException ex)
         {
@@ -476,8 +407,8 @@ public class BackupToolInitialize
                                         "\nThe backuptool application can be used in a variety of options and modes.\n", options,
                                         0, 2, "© SLU Dev Inc.  All Rights Reserved.",
                                         true);
-            
-            currUsageConf = new UsageConfig( sw.toString(), 1, null);
+
+            final UsageConfig currUsageConf = new UsageConfig(sw.toString(), 1, null);
 
             backupOpts = BackupConfig.from(currUsageConf);
         }
