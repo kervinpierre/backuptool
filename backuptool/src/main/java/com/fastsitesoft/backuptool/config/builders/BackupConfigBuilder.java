@@ -1,20 +1,19 @@
 /*
- * SLU Dev Inc. CONFIDENTIAL
- * DO NOT COPY
+ *  BackupLogic LLC CONFIDENTIAL
+ *  DO NOT COPY
  *
- * Copyright (c) [2012] - [2019] SLU Dev Inc. <info@sludev.com>
+ * Copyright (c) [2012] - [2019] BackupLogic LLC <info@backuplogic.com>
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
- * the property of SLU Dev Inc. and its suppliers,
- * if any.  The intellectual and technical concepts contained
- * herein are proprietary to SLU Dev Inc. and its suppliers and
- * may be covered by U.S. and Foreign Patents, patents in process,
- * and are protected by trade secret or copyright law.
- * Dissemination of this information or reproduction of this material
- * is strictly forbidden unless prior written permission is obtained
- * from SLU Dev Inc.
- *
+ *  the property of BackupLogic LLC and its suppliers,
+ *  if any.  The intellectual and technical concepts contained
+ *  herein are proprietary to BackupLogic LLC and its suppliers and
+ *  may be covered by U.S. and Foreign Patents, patents in process,
+ *  and are protected by trade secret or copyright law.
+ *  Dissemination of this information or reproduction of this material
+ *  is strictly forbidden unless prior written permission is obtained
+ *  from BackupLogic LLC
  */
 package com.fastsitesoft.backuptool.config.builders;
 
@@ -25,6 +24,7 @@ import com.fastsitesoft.backuptool.config.entities.BackupConfigCompression;
 import com.fastsitesoft.backuptool.config.entities.BackupConfigDirectory;
 import com.fastsitesoft.backuptool.config.entities.BackupConfigEncryption;
 import com.fastsitesoft.backuptool.config.entities.BackupConfigFile;
+import com.fastsitesoft.backuptool.config.entities.BackupConfigItem;
 import com.fastsitesoft.backuptool.config.entities.BackupConfigStorageBackend;
 import com.fastsitesoft.backuptool.config.entities.UsageConfig;
 import com.fastsitesoft.backuptool.config.validators.BackupConfigValidator;
@@ -35,12 +35,14 @@ import com.fastsitesoft.backuptool.enums.FSSBackupType;
 import com.fastsitesoft.backuptool.enums.FSSReportType;
 import com.fastsitesoft.backuptool.enums.FSSVerbosity;
 import com.fastsitesoft.backuptool.utils.BackupToolException;
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
@@ -225,6 +227,13 @@ public final class BackupConfigBuilder
         m_lockFilePath = lockFilePath;
     }
 
+    public void setLockFilePath(final String lockFilePathStr)
+    {
+        Path lockFilePath = Paths.get(lockFilePathStr);
+
+        m_lockFilePath = lockFilePath;
+    }
+
     public Integer getPriority()
     {
         return m_priority;
@@ -232,6 +241,12 @@ public final class BackupConfigBuilder
 
     public void setPriority(final Integer priority)
     {
+        m_priority = priority;
+    }
+    public void setPriority(final String priorityStr)
+    {
+        Integer priority = Integer.parseInt(priorityStr);
+
         m_priority = priority;
     }
 
@@ -242,6 +257,13 @@ public final class BackupConfigBuilder
 
     public void setEmailOnCompletion(final Boolean emailOnCompletion)
     {
+        m_emailOnCompletion = emailOnCompletion;
+    }
+
+    public void setEmailOnCompletion(final String emailOnCompletionStr)
+    {
+        Boolean emailOnCompletion = BooleanUtils.toBoolean(emailOnCompletionStr);
+
         m_emailOnCompletion = emailOnCompletion;
     }
 
@@ -693,6 +715,16 @@ public final class BackupConfigBuilder
         m_emailContacts = emailContacts;
     }
 
+    public void setEmailContacts(final String emailContact)
+    {
+        if ( m_emailContacts == null )
+        {
+            m_emailContacts = new ArrayList<>();
+        }
+
+        m_emailContacts.add(emailContact);
+    }
+
     /**
      * Path for restoring backed up data.
      *
@@ -764,6 +796,26 @@ public final class BackupConfigBuilder
         m_dirList = dirList;
     }
 
+    public void setDirList(final BackupConfigDirectory dir)
+    {
+        List<BackupConfigDirectory>  currBackupDirs = getDirList();
+        if (currBackupDirs == null)
+        {
+            currBackupDirs = new ArrayList<>();
+            setDirList(currBackupDirs);
+        }
+
+        currBackupDirs.add(dir);
+    }
+
+    public void setDirList(final String dirStr)
+    {
+        BackupConfigDirectory dir = new BackupConfigDirectory(
+                dirStr, null, null, null, null, null, false);
+
+        setDirList(dir);
+    }
+
     /**
      * The name of the file that will hold status information relating to a m_backup set.
      *
@@ -779,6 +831,13 @@ public final class BackupConfigBuilder
         m_stateFileName = stateFileName;
     }
 
+    public void setStateFileName(final String stateFileNameStr)
+    {
+        Path stateFileName = Paths.get(stateFileNameStr);
+
+        m_stateFileName = stateFileName;
+    }
+
     public Path getErrorFileName()
     {
         return m_errorFileName;
@@ -786,6 +845,13 @@ public final class BackupConfigBuilder
 
     public void setErrorFileName(final Path errorFileName)
     {
+        m_errorFileName = errorFileName;
+    }
+
+    public void setErrorFileName(final String errorFileNameStr)
+    {
+        Path errorFileName = Paths.get(errorFileNameStr);
+
         m_errorFileName = errorFileName;
     }
 
@@ -871,6 +937,26 @@ public final class BackupConfigBuilder
     public void setFileList(final List<BackupConfigFile> fileList)
     {
         m_fileList = fileList;
+    }
+
+    public void setFileList(final BackupConfigFile file)
+    {
+        List<BackupConfigFile>  currBackupFiles = getFileList();
+        if (currBackupFiles == null)
+        {
+            currBackupFiles = new ArrayList<>();
+            setFileList(currBackupFiles);
+        }
+
+        currBackupFiles.add(file);
+    }
+
+    public void setFileList(final String fileStr)
+    {
+        BackupConfigFile file = new BackupConfigFile(
+                fileStr, null, null, null, false);
+
+        setFileList(file);
     }
 
     /**

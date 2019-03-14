@@ -1,22 +1,23 @@
 /*
- *  SLU Dev Inc. CONFIDENTIAL
+ *  BackupLogic LLC CONFIDENTIAL
  *  DO NOT COPY
- * 
- * Copyright (c) [2012] - [2015] SLU Dev Inc. <info@sludev.com>
+ *
+ * Copyright (c) [2012] - [2019] BackupLogic LLC <info@backuplogic.com>
  * All Rights Reserved.
- * 
+ *
  * NOTICE:  All information contained herein is, and remains
- *  the property of SLU Dev Inc. and its suppliers,
+ *  the property of BackupLogic LLC and its suppliers,
  *  if any.  The intellectual and technical concepts contained
- *  herein are proprietary to SLU Dev Inc. and its suppliers and
+ *  herein are proprietary to BackupLogic LLC and its suppliers and
  *  may be covered by U.S. and Foreign Patents, patents in process,
  *  and are protected by trade secret or copyright law.
  *  Dissemination of this information or reproduction of this material
  *  is strictly forbidden unless prior written permission is obtained
- *  from SLU Dev Inc.
+ *  from BackupLogic LLC
  */
 package com.fastsitesoft.backuptool.config.parsers;
 
+import com.fastsitesoft.backuptool.config.builders.BackupConfigBuilder;
 import com.fastsitesoft.backuptool.config.entities.BackupConfig;
 import com.fastsitesoft.backuptool.config.entities.BackupConfigChunk;
 import com.fastsitesoft.backuptool.config.entities.BackupConfigDirectory;
@@ -66,40 +67,17 @@ public class BackupConfigParser
         Element tempEl;
         String tempStr;
 
-        BackupConfig res = null;
         Element currEl = doc.getDocumentElement();
         
         XPathFactory currXPathfactory = XPathFactory.newInstance();
         XPath currXPath = currXPathfactory.newXPath();
 
-        String currSetNameStr = null; 
-        String currSetTypeStr = null;
-        List<BackupConfigDirectory> currDirList = new ArrayList<>();
-        List<BackupConfigFile> currFileList = new ArrayList<>();
-        String currStateFileStr = null;
-        String currErrorFileStr = null;
-        String currHoldingDirStr = null;
-        String currArchiveNamePattern = null;
-        String currArchiveNameComponent = null;
-        String currArchiveNameTemplate = null;
-        String currJobNamePattern = null;
-        String currJobNameComponent = null;
-        String currJobNameTemplate = null;
-        String currCompressionStr = null;
-        String currChunkSize = null;
-        String currChunkSizeType = null;
-        String currLogFileStr = null;
-        String currLogEmailStr = null;
-        Boolean currEmailOnCompletion = false;
-        String currPriority = null;
-        String currLockFileStr = null;
-        BackupConfigStorageBackend currStorage = null;
-        String currEncryptionKeyString = null;
-        String currEncryptionTypeString = null;
-        
+        BackupConfigBuilder bcbuilder = BackupConfigBuilder.from();
+
         try
         {
-            currSetNameStr = currXPath.compile("./setName").evaluate(currEl);
+            tempStr = currXPath.compile("./setName").evaluate(currEl);
+            bcbuilder.setSetName(tempStr);
         }
         catch (XPathExpressionException ex)
         {
@@ -108,7 +86,8 @@ public class BackupConfigParser
         
         try
         {
-            currSetTypeStr = currXPath.compile("./setType").evaluate(currEl);
+            tempStr = currXPath.compile("./setType").evaluate(currEl);
+            bcbuilder.setSetType(tempStr);
         }
         catch (XPathExpressionException ex)
         {
@@ -117,7 +96,8 @@ public class BackupConfigParser
         
         try
         {
-            currEncryptionTypeString = currXPath.compile("./encrypt/cipher").evaluate(currEl);
+            tempStr = currXPath.compile("./encrypt/cipher").evaluate(currEl);
+            bcbuilder.setEncryptionCipher(tempStr);
         }
         catch (XPathExpressionException ex)
         {
@@ -126,7 +106,8 @@ public class BackupConfigParser
         
         try
         {
-            currEncryptionKeyString = currXPath.compile("./encrypt/key").evaluate(currEl);
+            tempStr = currXPath.compile("./encrypt/key").evaluate(currEl);
+            bcbuilder.setEncryptionKey(tempStr);
         }
         catch (XPathExpressionException ex)
         {
@@ -145,7 +126,7 @@ public class BackupConfigParser
                 for(int i=0; i<currElList.getLength(); i++)
                 {
                     tempEl = (Element)currElList.item(i);
-                    currDirList.add(BackupConfigItem.from(tempEl));
+                    bcbuilder.setDirList((BackupConfigDirectory)BackupConfigItem.from(tempEl));
                 }
             }
 
@@ -156,9 +137,8 @@ public class BackupConfigParser
             {
                 for(int i=0; i<currElList.getLength(); i++)
                 {
-
                     tempEl = (Element)currElList.item(i);
-                    currFileList.add(BackupConfigItem.from(tempEl));
+                    bcbuilder.setFileList((BackupConfigFile)BackupConfigItem.from(tempEl));
                 }
             }
         }
@@ -172,7 +152,8 @@ public class BackupConfigParser
         
         try
         {
-            currStateFileStr = currXPath.compile("./stateFile").evaluate(currEl);
+            tempStr = currXPath.compile("./stateFile").evaluate(currEl);
+            bcbuilder.setStateFileName(tempStr);
         }
         catch (XPathExpressionException ex)
         {
@@ -181,7 +162,8 @@ public class BackupConfigParser
 
         try
         {
-            currErrorFileStr = currXPath.compile("./errorFile").evaluate(currEl);
+            tempStr = currXPath.compile("./errorFile").evaluate(currEl);
+            bcbuilder.setErrorFileName(tempStr);
         }
         catch (XPathExpressionException ex)
         {
@@ -190,7 +172,8 @@ public class BackupConfigParser
 
         try
         {
-            currHoldingDirStr = currXPath.compile("./holdingDirectoryPath").evaluate(currEl);
+            tempStr = currXPath.compile("./holdingDirectoryPath").evaluate(currEl);
+            bcbuilder.setHoldingDirectory(tempStr);
         }
         catch (XPathExpressionException ex)
         {
@@ -200,10 +183,7 @@ public class BackupConfigParser
         try
         {
             tempStr = currXPath.compile("./archiveNameRegex").evaluate(currEl);
-            if( StringUtils.isNoneBlank(tempStr) )
-            {
-                currArchiveNamePattern = tempStr;
-            }
+            bcbuilder.setArchiveFileNamePattern(tempStr);
         }
         catch (XPathExpressionException ex)
         {
@@ -213,10 +193,7 @@ public class BackupConfigParser
         try
         {
             tempStr = currXPath.compile("./archiveNameComponent").evaluate(currEl);
-            if( StringUtils.isNoneBlank(tempStr) )
-            {
-                currArchiveNameComponent = tempStr;
-            }
+            bcbuilder.setArchiveFileNameComponent(tempStr);
         }
         catch (XPathExpressionException ex)
         {
@@ -226,10 +203,7 @@ public class BackupConfigParser
         try
         {
             tempStr = currXPath.compile("./archiveNameTemplate").evaluate(currEl);
-            if( StringUtils.isNoneBlank(tempStr) )
-            {
-                currArchiveNameTemplate = tempStr;
-            }
+            bcbuilder.setArchiveFileNameTemplate(tempStr);
         }
         catch (XPathExpressionException ex)
         {
@@ -239,10 +213,7 @@ public class BackupConfigParser
         try
         {
             tempStr = currXPath.compile("./jobNameRegex").evaluate(currEl);
-            if( StringUtils.isNoneBlank(tempStr) )
-            {
-                currJobNamePattern = tempStr;
-            }
+            bcbuilder.setJobFileNamePattern(tempStr);
         }
         catch (XPathExpressionException ex)
         {
@@ -252,10 +223,7 @@ public class BackupConfigParser
         try
         {
             tempStr = currXPath.compile("./jobNameComponent").evaluate(currEl);
-            if( StringUtils.isNoneBlank(tempStr) )
-            {
-                currJobNameComponent = tempStr;
-            }
+            bcbuilder.setJobFileNameComponent(tempStr);
         }
         catch (XPathExpressionException ex)
         {
@@ -265,10 +233,7 @@ public class BackupConfigParser
         try
         {
             tempStr = currXPath.compile("./jobNameTemplate").evaluate(currEl);
-            if( StringUtils.isNoneBlank(tempStr) )
-            {
-                currJobNameTemplate = tempStr;
-            }
+            bcbuilder.setJobFileNameTemplate(tempStr);
         }
         catch (XPathExpressionException ex)
         {
@@ -277,7 +242,8 @@ public class BackupConfigParser
 
         try
         {
-            currCompressionStr = currXPath.compile("./compressionScheme").evaluate(currEl);
+            tempStr = currXPath.compile("./compressionScheme").evaluate(currEl);
+            bcbuilder.setCompression(tempStr);
         }
         catch (XPathExpressionException ex)
         {
@@ -290,8 +256,7 @@ public class BackupConfigParser
             if( tempEl != null )
             {
                 BackupConfigChunk currChunkObj = BackupConfigChunk.from(tempEl);
-                currChunkSize = Long.toString(currChunkObj.getSize());
-                currChunkSizeType = currChunkObj.getSizeType().toString();
+                bcbuilder.setChunk(currChunkObj);
             }
         }
         catch (Exception ex)
@@ -299,9 +264,19 @@ public class BackupConfigParser
             log.debug("Error parsing 'chunk' section from the configuration file.", ex);
         }
         
+//        try
+//        {
+//            currLogFileStr = currXPath.compile("./logFile").evaluate(currEl);
+//        }
+//        catch (XPathExpressionException ex)
+//        {
+//            log.debug("", ex);
+//        }
+        
         try
         {
-            currLogFileStr = currXPath.compile("./logFile").evaluate(currEl);
+            tempStr = currXPath.compile("./emailOnCompletion").evaluate(currEl);
+            bcbuilder.setEmailOnCompletion(tempStr);
         }
         catch (XPathExpressionException ex)
         {
@@ -310,8 +285,8 @@ public class BackupConfigParser
         
         try
         {
-            String currEmailOnCompletionStr = currXPath.compile("./emailOnCompletion").evaluate(currEl);
-            currEmailOnCompletion = Boolean.parseBoolean(currEmailOnCompletionStr);
+            tempStr = currXPath.compile("./priority").evaluate(currEl);
+            bcbuilder.setPriority(tempStr);
         }
         catch (XPathExpressionException ex)
         {
@@ -320,16 +295,8 @@ public class BackupConfigParser
         
         try
         {
-            currPriority = currXPath.compile("./priority").evaluate(currEl);
-        }
-        catch (XPathExpressionException ex)
-        {
-            log.debug("", ex);
-        }
-        
-        try
-        {
-            currLockFileStr = currXPath.compile("./lockFilePath").evaluate(currEl);
+            tempStr = currXPath.compile("./lockFilePath").evaluate(currEl);
+            bcbuilder.setLockFilePath(tempStr);
         }
         catch (XPathExpressionException ex)
         {
@@ -340,8 +307,8 @@ public class BackupConfigParser
         List<String> emailContacts = new ArrayList<>();
         try
         {
-            currLogEmailStr = currXPath.compile("./logEmail").evaluate(currEl);
-            emailContacts.add(currLogEmailStr);
+            tempStr = currXPath.compile("./logEmail").evaluate(currEl);
+            bcbuilder.setEmailContacts(tempStr);
         }
         catch (XPathExpressionException ex)
         {
@@ -352,62 +319,15 @@ public class BackupConfigParser
         {
             tempEl = (Element)currXPath.compile("./storageType")
                     .evaluate(doc.getDocumentElement(), XPathConstants.NODE);
-            currStorage = BackupConfigStorageBackend.from(tempEl);
+
+            bcbuilder.setStorageBackend(BackupConfigStorageBackend.from(tempEl));
         }
         catch (XPathExpressionException ex)
         {
             log.debug("", ex);
         }
 
-        res = BackupConfig.from(
-                null,
-                currSetNameStr,
-                currPriority,
-                null, // useChecksum,
-                null, // useModifiedDate,
-                null,// restore,
-                null, // backup,
-                currEmailOnCompletion,
-                null, // dryRun,
-                null, // ignoreLock
-                null, // runAsService,
-                null, // displayUsage,
-                null, // displayVersion,
-                null, // preserveOwnership,
-                null, // preservePermissions,
-                null, // noClobber,
-                null, // backupDescribe,
-                null, // backupStatus,
-                currHoldingDirStr,
-                null, // backupReportPath,
-                null, // restoreDestination,
-                null,  // outputFile,
-                currLockFileStr,
-                currStateFileStr,
-                currErrorFileStr,
-                emailContacts,
-                currDirList,
-                currFileList,
-                null,
-                null, //backupId,
-                currSetTypeStr,
-                null,
-                currCompressionStr,
-                currEncryptionTypeString,
-                currEncryptionKeyString,
-                currChunkSize,
-                currChunkSizeType,
-                currArchiveNamePattern, // archiveNamePattern
-                currArchiveNameTemplate, // archiveNameComp
-                currArchiveNameComponent, // archiveNameTemplate
-                currJobNamePattern, // jobNamePattern
-                currJobNameTemplate, // jobNameComp
-                currJobNameComponent, // jobNameTemplate
-                null,
-                null, // verbosity,
-                currStorage,
-                null // usageConfig
-        );
+        BackupConfig res = bcbuilder.toConfig(null);
 
         return res;
     }

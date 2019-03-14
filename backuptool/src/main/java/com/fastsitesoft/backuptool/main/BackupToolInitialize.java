@@ -1,49 +1,30 @@
 /*
- *  CityMSP LLC CONFIDENTIAL
+ *  BackupLogic LLC CONFIDENTIAL
  *  DO NOT COPY
  *
- * Copyright (c) [2012] - [2019] CityMSP LLC <info@citymsp.nyc>
+ * Copyright (c) [2012] - [2019] BackupLogic LLC <info@backuplogic.com>
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
- *  the property of CityMSP LLC and its suppliers,
+ *  the property of BackupLogic LLC and its suppliers,
  *  if any.  The intellectual and technical concepts contained
- *  herein are proprietary to CityMSP LLC and its suppliers and
+ *  herein are proprietary to BackupLogic LLC and its suppliers and
  *  may be covered by U.S. and Foreign Patents, patents in process,
  *  and are protected by trade secret or copyright law.
  *  Dissemination of this information or reproduction of this material
  *  is strictly forbidden unless prior written permission is obtained
- *  from CityMSP LLC
+ *  from BackupLogic LLC
  */
 package com.fastsitesoft.backuptool.main;
 
-import com.fasterxml.jackson.databind.util.ArrayBuilders;
 import com.fastsitesoft.backuptool.config.builders.BackupConfigBuilder;
-import com.fastsitesoft.backuptool.config.parsers.BackupConfigParser;
 import com.fastsitesoft.backuptool.config.entities.BackupConfig;
-import com.fastsitesoft.backuptool.config.entities.BackupConfigDirectory;
-import com.fastsitesoft.backuptool.config.entities.BackupConfigFile;
 import com.fastsitesoft.backuptool.config.entities.UsageConfig;
+import com.fastsitesoft.backuptool.config.parsers.BackupConfigParser;
 import com.fastsitesoft.backuptool.config.parsers.ParserUtil;
 import com.fastsitesoft.backuptool.constants.BackupConstants;
 import com.fastsitesoft.backuptool.enums.BackupToolFileFormats;
-import com.fastsitesoft.backuptool.enums.BackupToolNameComponentType;
 import com.fastsitesoft.backuptool.utils.BackupToolException;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -52,8 +33,20 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.commons.lang3.BooleanUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Entry class for initializing the agent on start via various interfaces.  This
@@ -61,11 +54,11 @@ import org.apache.logging.log4j.LogManager;
  * command line options to "configuration objects and entities" that the rest of
  * the application uses.
  * 
- * @author Kervin Pierre <info@sludev.com>
+ * @author Kervin Pierre <kervinpierre@gmail.com>
  */
 public class BackupToolInitialize
 {
-    private static final org.apache.logging.log4j.Logger log 
+    private static final org.apache.logging.log4j.Logger LOGGER
                                 = LogManager.getLogger(BackupToolInitialize.class);
     
     /**
@@ -78,7 +71,7 @@ public class BackupToolInitialize
      */
     public static BackupConfig initialize(String[] args)
     {
-        log.debug( String.format("Initialize() started. %s\n", Arrays.toString(args)) );
+        LOGGER.debug( String.format("Initialize() started. %s\n", Arrays.toString(args)) );
         
         CommandLineParser parser = new DefaultParser();
         Options options = ConfigureOptions();
@@ -134,7 +127,7 @@ public class BackupToolInitialize
                     }
                     
                             
-                    log.debug( String.format("Initialize() : Argfile parsed : %s\n", 
+                    LOGGER.debug( String.format("Initialize() : Argfile parsed : %s\n",
                             Arrays.toString(argArray)) );
         
                     try
@@ -150,12 +143,12 @@ public class BackupToolInitialize
                 }
                 catch (FileNotFoundException ex)
                 {
-                     log.error( "Error : File not found :", ex);
+                     LOGGER.error( "Error : File not found :", ex);
                     throw new BackupToolException("ERROR: Argument file not found.", ex);
                 }
                 catch (IOException ex)
                 {
-                     log.error( "Error : IO : ", ex);
+                     LOGGER.error( "Error : IO : ", ex);
                     throw new BackupToolException("ERROR: Argument file can not be read.", ex);
                 }
             }
@@ -237,19 +230,7 @@ public class BackupToolInitialize
                         break;
                         
                     case "backup-folder":
-                        {
-                            BackupConfigDirectory dir = new BackupConfigDirectory(
-                                    currOpt.getValue(), null, null, null, null, null, false);
-
-                            List<BackupConfigDirectory>  currBackupDirs = backupOptsBuilder.getDirList();
-                            if (currBackupDirs == null)
-                            {
-                                currBackupDirs = new ArrayList<>();
-                                backupOptsBuilder.setDirList(currBackupDirs);
-                            }
-
-                            currBackupDirs.add(dir);
-                        }
+                        backupOptsBuilder.setDirList(currOpt.getValue());
                         break;
 
                     case "backup-holding-folder":
@@ -257,19 +238,7 @@ public class BackupToolInitialize
                         break;
                         
                     case "backup-file":
-                        {
-                            BackupConfigFile file = new BackupConfigFile(
-                                    currOpt.getValue(), null, null, null, false);
-
-                            List<BackupConfigFile>  currBackupFiles = backupOptsBuilder.getFileList();
-                            if (currBackupFiles == null)
-                            {
-                                currBackupFiles = new ArrayList<>();
-                                backupOptsBuilder.setFileList(currBackupFiles);
-                            }
-
-                            currBackupFiles.add(file);
-                        }
+                        backupOptsBuilder.setFileList(currOpt.getValue());
                         break;
 
                     case "archive-name-regex":
@@ -390,7 +359,7 @@ public class BackupToolInitialize
                 throw new BackupToolException("Expected a core function to be specified.  Please review your command line options. 'Backup'? 'Restore'? 'Usage'?");
             }
 
-            log.debug("Merging Command Line Arguments...");
+            LOGGER.debug("Merging Command Line Arguments...");
 
             backupOpts = backupOptsBuilder.toConfig(null);
         }
@@ -405,7 +374,7 @@ public class BackupToolInitialize
             formatter.printHelp( pw, 80,
                                      String.format("\njava -jar backuptool-%s.jar ", BackupConstants.PROD_VERSION), 
                                         "\nThe backuptool application can be used in a variety of options and modes.\n", options,
-                                        0, 2, "© SLU Dev Inc.  All Rights Reserved.",
+                                        0, 2, "© BackupLogic LLC All Rights Reserved.",
                                         true);
 
             final UsageConfig currUsageConf = new UsageConfig(sw.toString(), 1, null);
@@ -413,9 +382,7 @@ public class BackupToolInitialize
             backupOpts = BackupConfig.from(currUsageConf);
         }
 
-
-
-        log.debug( String.format("Initialize() end.\n") );
+        LOGGER.debug( String.format("Initialize() end.\n") );
         
         return backupOpts;
     }

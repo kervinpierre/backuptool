@@ -1,19 +1,19 @@
 /*
- *  CityMSP LLC CONFIDENTIAL
+ *  BackupLogic LLC CONFIDENTIAL
  *  DO NOT COPY
  *
- * Copyright (c) [2012] - [2019] CityMSP LLC <info@citymsp.nyc>
+ * Copyright (c) [2012] - [2019] BackupLogic LLC <info@backuplogic.com>
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
- *  the property of CityMSP LLC and its suppliers,
+ *  the property of BackupLogic LLC and its suppliers,
  *  if any.  The intellectual and technical concepts contained
- *  herein are proprietary to CityMSP LLC and its suppliers and
+ *  herein are proprietary to BackupLogic LLC and its suppliers and
  *  may be covered by U.S. and Foreign Patents, patents in process,
  *  and are protected by trade secret or copyright law.
  *  Dissemination of this information or reproduction of this material
  *  is strictly forbidden unless prior written permission is obtained
- *  from CityMSP LLC
+ *  from BackupLogic LLC
  */
 package com.fastsitesoft.backuptool.config.entities;
 
@@ -1452,7 +1452,7 @@ public final class BackupConfig
         return res;
     }
 
-    public static BackupConfig from(
+    private static BackupConfig from(
             final BackupConfig orig,
             final String setName,
             final String priority,

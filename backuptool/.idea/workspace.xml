@@ -3,7 +3,20 @@
   <component name="ChangeListManager">
     <list default="true" id="14c73f8c-e196-4610-9725-f0ed87dfb089" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/src/main/java/com/fastsitesoft/backuptool/config/builders/BackupConfigBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fastsitesoft/backuptool/config/builders/BackupConfigBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fastsitesoft/backuptool/config/entities/BackupConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fastsitesoft/backuptool/config/entities/BackupConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fastsitesoft/backuptool/config/parsers/BackupConfigParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fastsitesoft/backuptool/config/parsers/BackupConfigParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fastsitesoft/backuptool/config/validators/BackupConfigValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fastsitesoft/backuptool/config/validators/BackupConfigValidator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fastsitesoft/backuptool/constants/BackupConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fastsitesoft/backuptool/constants/BackupConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fastsitesoft/backuptool/enums/BackupToolIgnoreFlags.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fastsitesoft/backuptool/enums/BackupToolIgnoreFlags.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fastsitesoft/backuptool/jobs/BackupFull.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fastsitesoft/backuptool/jobs/BackupFull.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/fastsitesoft/backuptool/main/BackupToolInitialize.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fastsitesoft/backuptool/main/BackupToolInitialize.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fastsitesoft/backuptool/main/BackupToolMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fastsitesoft/backuptool/main/BackupToolMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fastsitesoft/backuptool/main/BackupToolRun.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fastsitesoft/backuptool/main/BackupToolRun.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/fastsitesoft/backuptool/utils/BackupFileArchiveOutputStream.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/fastsitesoft/backuptool/utils/BackupFileArchiveOutputStream.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/fastsitesoft/backuptool/BackupFileOutputTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/fastsitesoft/backuptool/BackupFileOutputTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/fastsitesoft/backuptool/backend/StorageBackendFileSystemTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/fastsitesoft/backuptool/backend/StorageBackendFileSystemTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/dataset01/config00001-general-example.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/dataset01/config00001-general-example.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/resources/dataset01/config00001-windows-general-example.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/resources/dataset01/config00001-windows-general-example.xml" afterDir="false" />
     </list>
     <ignored path="backuptool.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -32,8 +45,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/fastsitesoft/backuptool/main/BackupToolInitialize.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1875">
-              <caret line="412" column="58" lean-forward="true" selection-start-line="412" selection-start-column="58" selection-end-line="412" selection-end-column="58" />
+            <state relative-caret-position="150">
+              <caret line="6" column="2" lean-forward="true" selection-start-line="6" selection-start-column="2" selection-end-line="6" selection-end-column="2" />
             </state>
           </provider>
         </entry>
@@ -41,8 +54,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/fastsitesoft/backuptool/config/builders/BackupConfigBuilder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="273">
-              <caret line="928" column="24" selection-start-line="928" selection-start-column="24" selection-end-line="928" selection-end-column="24" />
+            <state relative-caret-position="100">
+              <caret line="4" column="70" selection-start-line="4" selection-start-column="70" selection-end-line="4" selection-end-column="70" />
             </state>
           </provider>
         </entry>
@@ -50,8 +63,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/fastsitesoft/backuptool/config/entities/BackupConfig.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="273">
-              <caret line="1376" column="39" selection-start-line="1376" selection-start-column="29" selection-end-line="1376" selection-end-column="39" />
+            <state relative-caret-position="100">
+              <caret line="4" column="70" selection-start-line="4" selection-start-column="70" selection-end-line="4" selection-end-column="70" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/fastsitesoft/backuptool/config/parsers/BackupConfigParser.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="100">
+              <caret line="4" column="70" selection-start-line="4" selection-start-column="70" selection-end-line="4" selection-end-column="70" />
             </state>
           </provider>
         </entry>
@@ -59,8 +81,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/fastsitesoft/backuptool/config/validators/BackupConfigValidator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="283">
-              <caret line="545" column="32" selection-start-line="545" selection-start-column="32" selection-end-line="545" selection-end-column="32" />
+            <state relative-caret-position="75">
+              <caret line="3" column="2" lean-forward="true" selection-start-line="3" selection-start-column="2" selection-end-line="3" selection-end-column="2" />
             </state>
           </provider>
         </entry>
@@ -70,6 +92,15 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="875">
               <caret line="35" column="13" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/fastsitesoft/backuptool/config/entities/BackupConfigItem.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="3121">
+              <caret line="253" column="7" lean-forward="true" selection-start-line="253" selection-start-column="7" selection-end-line="253" selection-end-column="7" />
             </state>
           </provider>
         </entry>
@@ -160,8 +191,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>run</find>
-      <find>disp</find>
       <find>backup</find>
       <find>m_backup</find>
       <find>m_output</find>
@@ -187,12 +216,15 @@
       <find>archivefilenameco</find>
       <find>chunk</find>
       <find>reportt</find>
-      <find>reportpath</find>
-      <find>currBackupDirs</find>
+      <find>CityMSP</find>
       <find>seterr</find>
+      <find>currLogFileStr</find>
+      <find>currBackupDirs</find>
+      <find>reportpath</find>
     </findStrings>
     <replaceStrings>
       <replace>c:/test/backuptool/test01/</replace>
+      <replace>BackupLogic</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -224,7 +256,6 @@
         <option value="$PROJECT_DIR$/src/test/java/com/fastsitesoft/backuptool/config/entities/writers/JobStateWriterTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/com/fastsitesoft/backuptool/file/local/BackupConfigItemResolverTest.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fastsitesoft/backuptool/config/entities/BackupConfigChunk.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/fastsitesoft/backuptool/config/validators/BackupConfigValidator.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fastsitesoft/backuptool/jobs/BackupJob.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fastsitesoft/backuptool/config/entities/JobSetState.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fastsitesoft/backuptool/BackupFileOutput.java" />
@@ -252,11 +283,12 @@
         <option value="$PROJECT_DIR$/src/test/java/com/fastsitesoft/backuptool/BackupFileOutputTest.java" />
         <option value="$PROJECT_DIR$/src/test/resources/dataset01/config00001-windows-general-example.xml" />
         <option value="$PROJECT_DIR$/src/main/java/com/fastsitesoft/backuptool/enums/BackupToolIgnoreFlags.java" />
+        <option value="$PROJECT_DIR$/src/test/java/com/fastsitesoft/backuptool/jobs/BackupFullTest.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/fastsitesoft/backuptool/main/BackupToolInitialize.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/fastsitesoft/backuptool/config/builders/BackupConfigBuilder.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fastsitesoft/backuptool/config/entities/BackupConfig.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/fastsitesoft/backuptool/config/parsers/BackupConfigParser.java" />
-        <option value="$PROJECT_DIR$/src/test/java/com/fastsitesoft/backuptool/jobs/BackupFullTest.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/fastsitesoft/backuptool/config/builders/BackupConfigBuilder.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/fastsitesoft/backuptool/main/BackupToolInitialize.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/fastsitesoft/backuptool/config/validators/BackupConfigValidator.java" />
       </list>
     </option>
   </component>
@@ -525,6 +557,17 @@
               <item name="config" type="462c0819:PsiDirectoryNode" />
               <item name="entities" type="462c0819:PsiDirectoryNode" />
               <item name="BackupConfig" type="1a9f42e2:ClassTreeNode" />
+            </path>
+            <path>
+              <item name="backuptool" type="b2602c69:ProjectViewProjectNode" />
+              <item name="backuptool" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="backuptool" type="462c0819:PsiDirectoryNode" />
+              <item name="config" type="462c0819:PsiDirectoryNode" />
+              <item name="entities" type="462c0819:PsiDirectoryNode" />
+              <item name="BackupConfigItem" type="1a9f42e2:ClassTreeNode" />
             </path>
             <path>
               <item name="backuptool" type="b2602c69:ProjectViewProjectNode" />
@@ -873,18 +916,19 @@
     <property name="SearchEverywhereHistoryKey" value="nextte&#9;PSI&#9;JAVA://com.fastsitesoft.backuptool.backend.IBackendFileSystem#nextTemplate&#10;templ&#9;PSI&#9;JAVA://com.fastsitesoft.backuptool.config.entities.BackupConfig#getArchiveFileNameTemplate" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1552440326282" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1552525536308" />
     <property name="com.intellij.ide.scratch.NewScratchFileAction" value="JAVA" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.includeInheritedMembers" value="false" />
     <property name="dynamic.classpath" value="false" />
     <property name="last.edited.regexp" value="Sample Text" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Problems" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="recentsLimit" value="5" />
-    <property name="settings.editor.selected.configurable" value="vcs.Subversion" />
+    <property name="settings.editor.selected.configurable" value="fileTemplates" />
     <property name="settings.editor.splitter.proportion" value="0.24099723" />
   </component>
   <component name="RecentsManager">
@@ -1347,7 +1391,7 @@
       <workItem from="1546570476413" duration="22564000" />
       <workItem from="1547607138866" duration="39394000" />
       <workItem from="1548463480327" duration="16346000" />
-      <workItem from="1552261898648" duration="21721000" />
+      <workItem from="1552261898648" duration="31068000" />
     </task>
     <servers />
   </component>
@@ -1384,7 +1428,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1039643000" />
+    <option name="totallyTimeSpent" value="1048990000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1605,7 +1649,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/fastsitesoft/backuptool/main/BackupToolInitialize.java</url>
-          <line>397</line>
+          <line>366</line>
           <properties />
           <option name="timeStamp" value="106" />
         </line-breakpoint>
@@ -1862,7 +1906,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar:///usr/lib/jvm/java-8-openjdk-amd64/src.zip!/java/nio/file/Files.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/com/fastsitesoft/backuptool/config/entities/writers/JobArchiveSummaryWriter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -2172,38 +2215,45 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fastsitesoft/backuptool/config/parsers/BackupConfigParser.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fastsitesoft/backuptool/config/entities/BackupConfigItem.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1490">
-          <caret line="410" lean-forward="true" selection-start-line="410" selection-end-line="410" />
+        <state relative-caret-position="3121">
+          <caret line="253" column="7" lean-forward="true" selection-start-line="253" selection-start-column="7" selection-end-line="253" selection-end-column="7" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/fastsitesoft/backuptool/config/entities/BackupConfig.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fastsitesoft/backuptool/config/parsers/BackupConfigParser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
-          <caret line="1376" column="39" selection-start-line="1376" selection-start-column="29" selection-end-line="1376" selection-end-column="39" />
+        <state relative-caret-position="100">
+          <caret line="4" column="70" selection-start-line="4" selection-start-column="70" selection-end-line="4" selection-end-column="70" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/fastsitesoft/backuptool/config/validators/BackupConfigValidator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="283">
-          <caret line="545" column="32" selection-start-line="545" selection-start-column="32" selection-end-line="545" selection-end-column="32" />
+        <state relative-caret-position="75">
+          <caret line="3" column="2" lean-forward="true" selection-start-line="3" selection-start-column="2" selection-end-line="3" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/fastsitesoft/backuptool/config/entities/BackupConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="4" column="70" selection-start-line="4" selection-start-column="70" selection-end-line="4" selection-end-column="70" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/fastsitesoft/backuptool/config/builders/BackupConfigBuilder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
-          <caret line="928" column="24" selection-start-line="928" selection-start-column="24" selection-end-line="928" selection-end-column="24" />
+        <state relative-caret-position="100">
+          <caret line="4" column="70" selection-start-line="4" selection-start-column="70" selection-end-line="4" selection-end-column="70" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/fastsitesoft/backuptool/main/BackupToolInitialize.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1875">
-          <caret line="412" column="58" lean-forward="true" selection-start-line="412" selection-start-column="58" selection-end-line="412" selection-end-column="58" />
+        <state relative-caret-position="150">
+          <caret line="6" column="2" lean-forward="true" selection-start-line="6" selection-start-column="2" selection-end-line="6" selection-end-column="2" />
         </state>
       </provider>
     </entry>
