@@ -489,7 +489,7 @@ public final class BackupConfig
         return m_encryption;
     }
 
-    private BackupConfig( UsageConfig conf )
+    public BackupConfig( UsageConfig conf )
     {
         m_usageConfig = conf;
         m_displayUsage = true;
@@ -599,7 +599,6 @@ public final class BackupConfig
     }
 
     private BackupConfig(
-            final BackupConfig orig,
             final String setName,
             final Integer priority,
             final Boolean useChecksum,
@@ -649,11 +648,6 @@ public final class BackupConfig
         {
             this.m_setName = setName;
         }
-        else if( (orig != null)
-                && (orig.getSetName() != null))
-        {
-            this.m_setName = orig.getSetName();
-        }
         else
         {
             // NB Don't validate here
@@ -665,11 +659,6 @@ public final class BackupConfig
         {
             this.m_holdingDirectory = holdingDirectory;
         }
-        else if( (orig != null)
-                && (orig.getHoldingDirectory() != null))
-        {
-            this.m_holdingDirectory = orig.getHoldingDirectory();
-        }
         else
         {
             //throw new BackupToolException("holding directory cannot be null");
@@ -680,11 +669,6 @@ public final class BackupConfig
         {
             this.m_backupReportPath = backupReportPath;
         }
-        else if( (orig != null)
-                && (orig.getBackupReportPath() != null))
-        {
-            this.m_backupReportPath = orig.getBackupReportPath();
-        }
         else
         {
             this.m_backupReportPath = null;
@@ -693,11 +677,6 @@ public final class BackupConfig
         if( restoreDestination != null )
         {
             this.m_restoreDestination = restoreDestination;
-        }
-        else if( (orig != null)
-                && (orig.getRestoreDestination() != null))
-        {
-            this.m_restoreDestination = orig.getRestoreDestination();
         }
         else
         {
@@ -708,11 +687,6 @@ public final class BackupConfig
         {
             this.m_outputFile = outputFile;
         }
-        else if( (orig != null)
-                && (orig.getOutputFile() != null))
-        {
-            this.m_outputFile = orig.getOutputFile();
-        }
         else
         {
             this.m_outputFile = null;
@@ -721,11 +695,6 @@ public final class BackupConfig
         if( lockFilePath != null )
         {
             this.m_lockFilePath = lockFilePath;
-        }
-        else if( (orig != null)
-                && (orig.getLockFilePath() != null))
-        {
-            this.m_lockFilePath = orig.getLockFilePath();
         }
         else
         {
@@ -736,11 +705,6 @@ public final class BackupConfig
         {
             this.m_stateFileName = stateFileName;
         }
-        else if( (orig != null)
-                && (orig.getStateFileName() != null))
-        {
-            this.m_stateFileName = orig.getStateFileName();
-        }
         else
         {
             this.m_stateFileName = null;
@@ -749,11 +713,6 @@ public final class BackupConfig
         if( errorFileName != null )
         {
             this.m_errorFileName = errorFileName;
-        }
-        else if( (orig != null)
-                && (orig.getErrorFileName() != null))
-        {
-            this.m_errorFileName = orig.getErrorFileName();
         }
         else
         {
@@ -764,11 +723,6 @@ public final class BackupConfig
         {
             this.m_priority = priority;
         }
-        else if( (orig != null)
-                && (orig.getPriority() != null))
-        {
-            this.m_priority = orig.getPriority();
-        }
         else
         {
             this.m_priority = 0;
@@ -777,11 +731,6 @@ public final class BackupConfig
         if( backupId != null )
         {
             this.m_backupId = backupId;
-        }
-        else if( (orig != null)
-                && (orig.getBackupId() != null))
-        {
-            this.m_backupId = orig.getBackupId();
         }
         else
         {
@@ -792,11 +741,6 @@ public final class BackupConfig
         {
             this.m_useChecksum = useChecksum;
         }
-        else if( (orig != null)
-                && (orig.getUseChecksum() != null))
-        {
-            this.m_useChecksum = orig.getUseChecksum();
-        }
         else
         {
             this.m_useChecksum = null;
@@ -805,11 +749,6 @@ public final class BackupConfig
         if( useModifiedDate != null )
         {
             this.m_useModifiedDate = useModifiedDate;
-        }
-        else if( (orig != null)
-                && (orig.getUseModifiedDate() != null))
-        {
-            this.m_useModifiedDate = orig.getUseModifiedDate();
         }
         else
         {
@@ -820,11 +759,6 @@ public final class BackupConfig
         {
             this.m_backup = backup;
         }
-        else if( (orig != null)
-                && (orig.getBackup() != null))
-        {
-            this.m_backup = orig.getBackup();
-        }
         else
         {
             this.m_backup = null;
@@ -833,11 +767,6 @@ public final class BackupConfig
         if( restore != null )
         {
             this.m_restore = restore;
-        }
-        else if( (orig != null)
-                && (orig.getRestore() != null))
-        {
-            this.m_restore = orig.getRestore();
         }
         else
         {
@@ -848,11 +777,6 @@ public final class BackupConfig
         {
             this.m_emailOnCompletion = emailOnCompletion;
         }
-        else if( (orig != null)
-                && (orig.getEmailOnCompletion() != null))
-        {
-            this.m_emailOnCompletion = orig.getEmailOnCompletion();
-        }
         else
         {
             this.m_emailOnCompletion = null;
@@ -861,11 +785,6 @@ public final class BackupConfig
         if( dryRun != null )
         {
             this.m_dryRun = dryRun;
-        }
-        else if( (orig != null)
-                && (orig.getDryRun() != null))
-        {
-            this.m_dryRun = orig.getDryRun();
         }
         else
         {
@@ -876,11 +795,6 @@ public final class BackupConfig
         {
             this.m_ignoreLock = ignoreLock;
         }
-        else if( (orig != null)
-                && (orig.getIgnoreLock() != null))
-        {
-            this.m_ignoreLock = orig.getIgnoreLock();
-        }
         else
         {
             this.m_ignoreLock = null;
@@ -889,11 +803,6 @@ public final class BackupConfig
         if( runAsService != null )
         {
             this.m_runAsService = runAsService;
-        }
-        else if( (orig != null)
-                && (orig.getRunAsService() != null))
-        {
-            this.m_runAsService = orig.getRunAsService();
         }
         else
         {
@@ -904,11 +813,6 @@ public final class BackupConfig
         {
             this.m_displayUsage = displayUsage;
         }
-        else if( (orig != null)
-                && (orig.getDisplayUsage() != null))
-        {
-            this.m_displayUsage = orig.getDisplayUsage();
-        }
         else
         {
             this.m_displayUsage = null;
@@ -917,11 +821,6 @@ public final class BackupConfig
         if( displayVersion != null )
         {
             this.m_displayVersion = displayVersion;
-        }
-        else if( (orig != null)
-                && (orig.getDisplayVersion() != null))
-        {
-            this.m_displayVersion = orig.getDisplayVersion();
         }
         else
         {
@@ -932,11 +831,6 @@ public final class BackupConfig
         {
             this.m_preserveOwnership = preserveOwnership;
         }
-        else if( (orig != null)
-                && (orig.getPreserveOwnership() != null))
-        {
-            this.m_preserveOwnership= orig.getPreserveOwnership();
-        }
         else
         {
             this.m_preserveOwnership = null;
@@ -945,11 +839,6 @@ public final class BackupConfig
         if( preservePermissions != null )
         {
             this.m_preservePermissions = preservePermissions;
-        }
-        else if( (orig != null)
-                && (orig.getPreservePermissions() != null))
-        {
-            this.m_preservePermissions = orig.getPreservePermissions();
         }
         else
         {
@@ -960,11 +849,6 @@ public final class BackupConfig
         {
             this.m_noClobber = noClobber;
         }
-        else if( (orig != null)
-                && (orig.getNoClobber() != null))
-        {
-            this.m_noClobber = orig.getNoClobber();
-        }
         else
         {
             this.m_noClobber = null;
@@ -973,11 +857,6 @@ public final class BackupConfig
         if( backupDescribe != null )
         {
             this.m_backupDescribe = backupDescribe;
-        }
-        else if( (orig != null)
-                && (orig.getBackupDescribe() != null))
-        {
-            this.m_backupDescribe = orig.getBackupDescribe();
         }
         else
         {
@@ -988,11 +867,6 @@ public final class BackupConfig
         {
             this.m_backupStatus = backupStatus;
         }
-        else if( (orig != null)
-                && (orig.getBackupStatus() != null))
-        {
-            this.m_backupStatus = orig.getBackupStatus();
-        }
         else
         {
             this.m_backupStatus = null;
@@ -1001,11 +875,6 @@ public final class BackupConfig
         if( compression != null )
         {
             this.m_compression = compression;
-        }
-        else if( (orig != null)
-                && (orig.getCompression() != null))
-        {
-            this.m_compression = orig.getCompression();
         }
         else
         {
@@ -1016,11 +885,6 @@ public final class BackupConfig
         {
             this.m_backupReportType = backupReportType;
         }
-        else if( (orig != null)
-                && (orig.getBackupReportType() != null))
-        {
-            this.m_backupReportType = orig.getBackupReportType();
-        }
         else
         {
             this.m_backupReportType = null;
@@ -1029,11 +893,6 @@ public final class BackupConfig
         if( checksumType != null )
         {
             this.m_checksumType = checksumType;
-        }
-        else if( (orig != null)
-                && (orig.getChecksumType() != null))
-        {
-            this.m_checksumType = orig.getChecksumType();
         }
         else
         {
@@ -1044,11 +903,6 @@ public final class BackupConfig
         {
             this.m_verbosity = verbosity;
         }
-        else if( (orig != null)
-                && (orig.getVerbosity() != null))
-        {
-            this.m_verbosity = orig.getVerbosity();
-        }
         else
         {
             this.m_verbosity = null;
@@ -1057,11 +911,6 @@ public final class BackupConfig
         if( emailContacts != null )
         {
             this.m_emailContacts = emailContacts;
-        }
-        else if( (orig != null)
-                && (orig.getEmailContacts() != null))
-        {
-            this.m_emailContacts = orig.getEmailContacts();
         }
         else
         {
@@ -1072,11 +921,6 @@ public final class BackupConfig
         {
             this.m_archiveFileNamePattern = archiveFileNamePattern;
         }
-        else if( (orig != null)
-                && (orig.getArchiveFileNamePattern() != null))
-        {
-            this.m_archiveFileNamePattern = orig.getArchiveFileNamePattern();
-        }
         else
         {
             this.m_archiveFileNamePattern = null;
@@ -1085,11 +929,6 @@ public final class BackupConfig
         if( archiveFileNameComponent != null )
         {
             this.m_archiveFileNameComponent = archiveFileNameComponent;
-        }
-        else if( (orig != null)
-                && (orig.getArchiveFileNameComponent() != null))
-        {
-            this.m_archiveFileNameComponent = orig.getArchiveFileNameComponent();
         }
         else
         {
@@ -1100,11 +939,6 @@ public final class BackupConfig
         {
             this.m_archiveFileNameTemplate = archiveFileNameTemplate;
         }
-        else if( (orig != null)
-                && (orig.getArchiveFileNameTemplate() != null))
-        {
-            this.m_archiveFileNameTemplate = orig.getArchiveFileNameTemplate();
-        }
         else
         {
             this.m_archiveFileNameTemplate = null;
@@ -1113,11 +947,6 @@ public final class BackupConfig
         if( archiveFileNameComponent != null )
         {
             this.m_backupToolIgnoreFlags = ignoreFlags;
-        }
-        else if( (orig != null)
-                && (orig.getBackupToolIgnoreFlags() != null))
-        {
-            this.m_backupToolIgnoreFlags = orig.getBackupToolIgnoreFlags();
         }
         else
         {
@@ -1128,11 +957,6 @@ public final class BackupConfig
         {
             this.m_jobFileNamePattern = jobFileNamePattern;
         }
-        else if( (orig != null)
-                && (orig.getJobFileNamePattern() != null))
-        {
-            this.m_jobFileNamePattern = orig.getJobFileNamePattern();
-        }
         else
         {
             this.m_jobFileNamePattern = null;
@@ -1141,11 +965,6 @@ public final class BackupConfig
         if( jobFileNameComponent != null )
         {
             this.m_jobFileNameComponent = jobFileNameComponent;
-        }
-        else if( (orig != null)
-                && (orig.getArchiveFileNameComponent() != null))
-        {
-            this.m_jobFileNameComponent = orig.getJobFileNameComponent();
         }
         else
         {
@@ -1156,11 +975,6 @@ public final class BackupConfig
         {
             this.m_jobFileNameTemplate = jobFileNameTemplate;
         }
-        else if( (orig != null)
-                && (orig.getJobFileNameTemplate() != null))
-        {
-            this.m_jobFileNameTemplate = orig.getJobFileNameTemplate();
-        }
         else
         {
             this.m_jobFileNameTemplate = null;
@@ -1169,11 +983,6 @@ public final class BackupConfig
         if( usageConfig != null )
         {
             this.m_usageConfig = usageConfig;
-        }
-        else if( (orig != null)
-                && (orig.getUsageConfig() != null))
-        {
-            this.m_usageConfig = orig.getUsageConfig();
         }
         else
         {
@@ -1184,11 +993,6 @@ public final class BackupConfig
         {
             this.m_dirList = dirList;
         }
-        else if( (orig != null)
-                && (orig.getDirList() != null))
-        {
-            this.m_dirList = orig.getDirList();
-        }
         else
         {
             this.m_dirList = null;
@@ -1197,11 +1001,6 @@ public final class BackupConfig
         if( fileList != null )
         {
             this.m_fileList = fileList;
-        }
-        else if( (orig != null)
-                && (orig.getFileList() != null))
-        {
-            this.m_fileList = orig.getFileList();
         }
         else
         {
@@ -1212,11 +1011,6 @@ public final class BackupConfig
         {
             this.m_setType = setType;
         }
-        else if( (orig != null)
-                && (orig.getSetType() != null))
-        {
-            this.m_setType = orig.getSetType();
-        }
         else
         {
             this.m_setType = null;
@@ -1225,11 +1019,6 @@ public final class BackupConfig
         if( encryption != null )
         {
             this.m_encryption = encryption;
-        }
-        else if( (orig != null)
-                && (orig.getEncryption() != null))
-        {
-            this.m_encryption = orig.getEncryption();
         }
         else
         {
@@ -1240,11 +1029,6 @@ public final class BackupConfig
         {
             this.m_chunk = chunk;
         }
-        else if( (orig != null)
-                && (orig.getChunk() != null))
-        {
-            this.m_chunk = orig.getChunk();
-        }
         else
         {
             this.m_chunk = null;
@@ -1253,11 +1037,6 @@ public final class BackupConfig
         if( storageBackend != null )
         {
             this.m_storageBackend = storageBackend;
-        }
-        else if( (orig != null)
-                && (orig.getStorageBackend() != null))
-        {
-            this.m_storageBackend = orig.getStorageBackend();
         }
         else
         {
@@ -1355,7 +1134,6 @@ public final class BackupConfig
     }
 
     public static BackupConfig from(
-            final BackupConfig orig,
             final String setName,
             final Integer priority,
             final Boolean useChecksum,
@@ -1402,7 +1180,6 @@ public final class BackupConfig
             final UsageConfig usageConfig) throws BackupToolException
     {
         BackupConfig res = new BackupConfig(
-                orig,
                 setName,
                 priority,
                 useChecksum,
@@ -1832,7 +1609,6 @@ public final class BackupConfig
             }
 
             conf = from(
-                    orig,
                     currSetName,
                     currPriority,
                     useChecksum,

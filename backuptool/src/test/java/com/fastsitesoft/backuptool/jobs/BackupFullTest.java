@@ -143,7 +143,7 @@ public class BackupFullTest
         archComps.add(BackupConstants.DEFAULT_ARCHIVE_NAME_RULE_COMPONENT);
         jobComps.add(BackupConstants.DEFAULT_JOB_NAME_RULE_COMPONENT);
 
-        BackupConfig bc = BackupConfig.from(null,
+        BackupConfig bc = BackupConfig.from(
                 "testdefault",
                 1,
                 false,
@@ -259,7 +259,7 @@ public class BackupFullTest
         BackupConfigChunk chunk = new BackupConfigChunk(2, FSSBackupSizeType.MB, true);
 
         // Run the first full backup
-        BackupConfig bc = BackupConfig.from( null,
+        BackupConfig bc = BackupConfig.from(
                 "testdefault",
                 1,
                 false,
@@ -315,7 +315,7 @@ public class BackupFullTest
         Thread.sleep(5000);
 
         // Run the second full backup
-        bc = BackupConfig.from( null,
+        bc = BackupConfig.from(
                 "testdefault",
                 1,
                 false,

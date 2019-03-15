@@ -76,8 +76,9 @@ public class BackupToolInitialize
         CommandLineParser parser = new DefaultParser();
         Options options = ConfigureOptions();
 
-        BackupConfig backupOpts = null;
         BackupConfigBuilder backupOptsBuilder = BackupConfigBuilder.from();
+
+        BackupConfig backupOpts = null;
 
         try
         {
@@ -157,8 +158,9 @@ public class BackupToolInitialize
             {
                 Path confFile = Paths.get(  line.getOptionValue("conf-file"));
                 
-                backupOpts = BackupConfigParser.readConfig(
-                        ParserUtil.readConfig(confFile, BackupToolFileFormats.BACKUPCONFIGURATION));
+                backupOptsBuilder.merge( BackupConfigParser.readConfig(
+                        ParserUtil.readConfig(confFile,
+                                BackupToolFileFormats.BACKUPCONFIGURATION)) );
             }
             
             if( line.getOptions().length < 1 )
@@ -166,7 +168,7 @@ public class BackupToolInitialize
                 // At least one option is mandatory
                 throw new BackupToolException("No program arguments were found.");
             }
-            
+
             // Argument order can be important. We may be creating THEN changing a folder's attributes.
             // It would be important to from the folder first.
             Iterator cmdI = line.iterator();
@@ -361,7 +363,7 @@ public class BackupToolInitialize
 
             LOGGER.debug("Merging Command Line Arguments...");
 
-            backupOpts = backupOptsBuilder.toConfig(null);
+            backupOpts = backupOptsBuilder.toConfig();
         }
         catch (BackupToolException ex)
         {
@@ -379,7 +381,7 @@ public class BackupToolInitialize
 
             final UsageConfig currUsageConf = new UsageConfig(sw.toString(), 1, null);
 
-            backupOpts = BackupConfig.from(currUsageConf);
+            backupOpts = BackupConfigBuilder.toUsageConfig(currUsageConf);
         }
 
         LOGGER.debug( String.format("Initialize() end.\n") );

@@ -499,7 +499,7 @@ public final class BackupConfigBuilder
         return m_backupToolIgnoreFlags;
     }
 
-    public void setBackupToolIgnoreFlags(
+    public void setIgnoreFlags(
             final Set<BackupToolIgnoreFlags> backupToolIgnoreFlags)
     {
         m_backupToolIgnoreFlags = backupToolIgnoreFlags;
@@ -1012,10 +1012,65 @@ public final class BackupConfigBuilder
         return res;
     }
 
-    public BackupConfig toConfig(final BackupConfig orig)
+    public static BackupConfig toUsageConfig(final UsageConfig conf )
+    {
+        BackupConfig res = BackupConfig.from(conf);
+
+        return res;
+    }
+
+    public void merge(final BackupConfig orig)
+    {
+        setSetName(orig.getSetName());
+        setPriority(orig.getPriority());
+        setUseChecksum(orig.getUseChecksum());
+        setUseModifiedDate(orig.getUseModifiedDate());
+        setRestore(orig.getRestore());
+        setBackup(orig.getBackup());
+        setEmailOnCompletion(orig.isEmailOnCompletion());
+        setDryRun(orig.isDryRun());
+        setIgnoreLock(orig.isIgnoreLock());
+        setRunAsService(orig.isRunAsService());
+        setDisplayUsage(orig.isDisplayUsage());
+        setDisplayVersion(orig.isDisplayVersion());
+        setPreserveOwnership(orig.isPreserveOwnership());
+        setPreservePermissions(orig.isPreservePermissions());
+        setNoClobber(orig.isNoClobber());
+        setBackupDescribe(orig.isBackupDescribe());
+        setBackupStatus(orig.isBackupStatus());
+        setHoldingDirectory(orig.getHoldingDirectory());
+        setBackupReportPath(orig.getBackupReportPath());
+        setRestoreDestination(orig.getRestoreDestination());
+        setOutputFile(orig.getOutputFile());
+        setLockFilePath(orig.getLockFilePath());
+        setStateFileName(orig.getStateFileName());
+        setErrorFileName(orig.getErrorFileName());
+        setEmailContacts(orig.getEmailContacts());
+        setDirList(orig.getDirList());
+        setFileList(orig.getFileList());
+        setBackupReportType(orig.getBackupReportType());
+        setBackupId(orig.getBackupId());
+        setSetType(orig.getSetType());
+        setChecksumType(orig.getChecksumType());
+        setCompression(orig.getCompression());
+        setEncryption(orig.getEncryption());
+        setChunk(orig.getChunk());
+        setArchiveFileNamePattern(orig.getArchiveFileNamePattern());
+        setArchiveFileNameComponent(orig.getArchiveFileNameComponent());
+        setArchiveFileNameTemplate(orig.getArchiveFileNameTemplate());
+        setJobFileNamePattern(orig.getJobFileNamePattern());
+        setJobFileNameComponent(orig.getJobFileNameComponent());
+        setJobFileNameTemplate(orig.getJobFileNameTemplate());
+        setIgnoreFlags(orig.getIgnoreFlags());
+        setVerbosity(orig.getVerbosity());
+        setStorageBackend(orig.getStorageBackend());
+        setUsageConfig(orig.getUsageConfig());
+    }
+
+    public BackupConfig toConfig()
             throws BackupToolException
     {
-        BackupConfig res = BackupConfig.from(orig,
+        BackupConfig res = BackupConfig.from(
                 getSetName(),
                 getPriority(),
                 getUseChecksum(),

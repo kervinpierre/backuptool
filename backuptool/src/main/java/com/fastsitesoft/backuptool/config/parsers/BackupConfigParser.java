@@ -327,7 +327,7 @@ public class BackupConfigParser
             log.debug("", ex);
         }
 
-        BackupConfig res = bcbuilder.toConfig(null);
+        BackupConfig res = bcbuilder.toConfig();
 
         return res;
     }
