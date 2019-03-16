@@ -67,6 +67,7 @@
     </itemList>
 
     <stateFile>backupdata.xml</stateFile>
+    <errorFile>errors.txt</errorFile>
     <holdingDirectoryPath>c:/test/backuptool/test01/backupTest/holdingDirectory</holdingDirectoryPath>
     <compressionScheme>gzip</compressionScheme>
     <chunk enable="true">

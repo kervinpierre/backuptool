@@ -103,7 +103,9 @@ public interface IBackendFileSystem
      * @throws com.fastsitesoft.backuptool.utils.BackupToolException
      */
     public long getContentSize( IBackupFilePart file ) throws BackupToolException;
-    
+
+    boolean isDirectory(IBackupFilePart file) throws BackupToolException;
+
     public long getLastModifiedDate(IBackupFilePart file) throws BackupToolException;
     
     /**

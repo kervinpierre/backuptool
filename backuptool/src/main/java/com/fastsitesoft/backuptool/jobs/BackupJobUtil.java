@@ -1,20 +1,19 @@
 /*
- * SLU Dev Inc. CONFIDENTIAL
- * DO NOT COPY
+ *  BackupLogic LLC CONFIDENTIAL
+ *  DO NOT COPY
  *
- * Copyright (c) [2012] - [2015] SLU Dev Inc. <info@sludev.com>
+ * Copyright (c) [2012] - [2019] BackupLogic LLC <info@citymsp.nyc>
  * All Rights Reserved.
  *
  * NOTICE:  All information contained herein is, and remains
- * the property of SLU Dev Inc. and its suppliers,
- * if any.  The intellectual and technical concepts contained
- * herein are proprietary to SLU Dev Inc. and its suppliers and
- * may be covered by U.S. and Foreign Patents, patents in process,
- * and are protected by trade secret or copyright law.
- * Dissemination of this information or reproduction of this material
- * is strictly forbidden unless prior written permission is obtained
- * from SLU Dev Inc.
- *
+ *  the property of BackupLogic LLC and its suppliers,
+ *  if any.  The intellectual and technical concepts contained
+ *  herein are proprietary to BackupLogic LLC and its suppliers and
+ *  may be covered by U.S. and Foreign Patents, patents in process,
+ *  and are protected by trade secret or copyright law.
+ *  Dissemination of this information or reproduction of this material
+ *  is strictly forbidden unless prior written permission is obtained
+ *  from BackupLogic LLC
  */
 
 package com.fastsitesoft.backuptool.jobs;
@@ -246,6 +245,18 @@ public final class BackupJobUtil
 
         IBackupFilePart currJobStateFile = bfs.resolveRemoteFile(stateDest);
         IBackupFilePart currJobErrorFile = bfs.resolveRemoteFile(errorDest);
+
+        if( bfs.isDirectory(currJobStateFile))
+        {
+            throw new BackupToolException(String.format("State file '%s' exists and is a directory",
+                    currJobStateFile));
+        }
+
+        if( bfs.isDirectory(currJobErrorFile))
+        {
+            throw new BackupToolException(String.format("Error file '%s' exists and is a directory",
+                    currJobErrorFile));
+        }
 
         Pair<Path,Path> temp = JobStateWriter.write(js);
 

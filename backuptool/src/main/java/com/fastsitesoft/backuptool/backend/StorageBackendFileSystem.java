@@ -1,19 +1,19 @@
 /*
- *  SLU Dev Inc. CONFIDENTIAL
+ *  BackupLogic LLC CONFIDENTIAL
  *  DO NOT COPY
- * 
- *  Copyright (c) [2012] - [2015] SLU Dev Inc. <info@sludev.com>
- *  All Rights Reserved.
- * 
- *  NOTICE:  All information contained herein is, and remains
- *  the property of SLU Dev Inc. and its suppliers,
+ *
+ * Copyright (c) [2012] - [2019] BackupLogic LLC <info@citymsp.nyc>
+ * All Rights Reserved.
+ *
+ * NOTICE:  All information contained herein is, and remains
+ *  the property of BackupLogic LLC and its suppliers,
  *  if any.  The intellectual and technical concepts contained
- *  herein are proprietary to SLU Dev Inc. and its suppliers and
+ *  herein are proprietary to BackupLogic LLC and its suppliers and
  *  may be covered by U.S. and Foreign Patents, patents in process,
  *  and are protected by trade secret or copyright law.
  *  Dissemination of this information or reproduction of this material
  *  is strictly forbidden unless prior written permission is obtained
- *  from SLU Dev Inc.
+ *  from BackupLogic LLC
  */
 package com.fastsitesoft.backuptool.backend;
 
@@ -48,6 +48,7 @@ import org.apache.commons.vfs2.FileObject;
 import org.apache.commons.vfs2.FileSelector;
 import org.apache.commons.vfs2.FileSystemException;
 import org.apache.commons.vfs2.FileSystemOptions;
+import org.apache.commons.vfs2.FileType;
 import org.apache.commons.vfs2.Selectors;
 import org.apache.commons.vfs2.auth.StaticUserAuthenticator;
 import org.apache.commons.vfs2.impl.DefaultFileSystemConfigBuilder;
@@ -370,7 +371,7 @@ public final class StorageBackendFileSystem implements IBackendFileSystem
             
             throw new BackupToolException(errMsg, ex);
         }
-        
+
         try
         {
             res = foDst.exists();
@@ -425,6 +426,47 @@ public final class StorageBackendFileSystem implements IBackendFileSystem
             throw new BackupToolException(errMsg, ex);
         }
         
+        return res;
+    }
+
+    @Override
+    public boolean isDirectory(IBackupFilePart file) throws BackupToolException
+    {
+        boolean res = false;
+
+        String fileDst;
+
+        FileObject foDst;
+
+        fileDst = file.getUri().toASCIIString();
+
+        try
+        {
+            foDst = fileManager.resolveFile(fileDst, fileSystemOpts);
+        }
+        catch (FileSystemException ex)
+        {
+            String errMsg = String.format("Error resolving file uri '%s'", fileDst);
+
+            log.debug(errMsg, ex);
+
+            throw new BackupToolException(errMsg, ex);
+        }
+
+        try
+        {
+            final FileType type = foDst.getType();
+            res = type==FileType.FOLDER;
+        }
+        catch (FileSystemException ex)
+        {
+            String errMsg = String.format("Error checking isDirectory() on '%s'", fileDst );
+
+            log.debug(errMsg, ex);
+
+            throw new BackupToolException(errMsg, ex);
+        }
+
         return res;
     }
 
